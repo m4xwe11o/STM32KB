@@ -3,4 +3,4 @@ FH-Campus Wien MAD Projekt
 
 Members:
 	Erika Wood
-	Maximilian Pessl
+	Maximilian Pessl (Peßl)
