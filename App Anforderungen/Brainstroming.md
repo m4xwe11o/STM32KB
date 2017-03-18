@@ -13,3 +13,15 @@
     - Sollen den Text aufpeppen
   *Wie?*
   - Augewählte Google Bilder
+
+
+**VORGEHEN**
+
+#SCRUM
+  - Feedback und Statusupdates
+#Kanban
+  - Backlogs
+  - Entwicklen von Modulen `prototyping`
+  - UI Mockups `Baslamiq`
+  - TDD `wichtige Module`
+  - Start with the simplest one first `darauf dann aufbauen und erweitern`
