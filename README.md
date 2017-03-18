@@ -1,14 +1,14 @@
 # STM32KB `Knowledge Base`
-##FH-Campus Wien MAD Projekt
+#FH-Campus Wien MAD Projekt
 
-##Members:
+#Members:
 	- Erika Wood
 	- Maximilian Pessl (Peßl)
 
-##Bürokratie
+#Bürokratie
 	- Ansammlungen rund um das Projekt
 
-##App Anforderungen
+#App Anforderungen
 	- Technische Anforderungen
 	- Statische Anforderungen
 		- Betrifft App im isolierten Zustand
