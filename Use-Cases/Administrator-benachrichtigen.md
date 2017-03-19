@@ -2,6 +2,7 @@
 
 ##Name:
   - Administrator beachrichtigen
+  //ich wuerde diesen Use Case eher als Freischaltung beantragen nennen - mit benachrichtigen assoziere ich eher eine Nachricht schreiben
 
 ##Kurzbeschreibung:
   - Benachrichtigung an den Administrator das eine Freischaltung für einen Author aussteht
@@ -14,6 +15,10 @@
 
 ##Fehlersituation:
   - Administrator führt Freischaltung nicht durch
+  //Fehlersituation bezieht sich auf Systemfehler bei der use case beschreibung
+  //Administrator fuehrt Freischaltung nicht durch ist somit nur ein Zweig in einem if - falls Anforderungen nicht erfuellt werden, wird nicht freigeschalten
+  //Bsp beim Bankomat waere: es gibt keine 10Euro Scheine keine Fehlersituation, da dies im Funktionsablauf vorkommen kann - jedoch waere eine fehlgeschlagene Authentication aufgrund eines Serverausfalls eine Fehlersituation
+  //Fehlersituation waere bei unserem Use-Case bspw dass die Benachrichtigung gerade nicht an den Administrators geschickt werden kann aufgrund fehlender Netzwerkverbindung
 
 ##Systemzustand im Fehlerfall:
   - Benachrichtigung an den Benutzer
