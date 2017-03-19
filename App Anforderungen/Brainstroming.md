@@ -14,6 +14,8 @@
   *Wie?*
   - Augewählte Google Bilder
 
+#App icons
+  - [Link]https://material.io/icons/
 
 **VORGEHEN**
 
@@ -25,3 +27,9 @@
   - UI Mockups `Baslamiq`
   - TDD `wichtige Module`
   - Start with the simplest one first `darauf dann aufbauen und erweitern`
+
+**ANDROID TRAINING**
+
+#Wichtige Tutorials
+  - [Link]https://developer.android.com/training/appbar/index.html `Training für die App Bar`
+    - [Link]https://www.youtube.com/watch?v=EZ-sNN7UWFU `Video um ein Menu zu erzeugen das neben dem App Namen steht`
