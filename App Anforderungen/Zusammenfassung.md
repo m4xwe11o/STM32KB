@@ -7,11 +7,12 @@
   - Artikel kommentieren
   - Artikel favorisieren
   - Artikel versenden (Email)
-  - Author registrieren
+  - *Author registrieren*
   - Author login
-  - Authr freigeschalten
+  - Author freigeschalten
   - Author benachrichtigen
   - Tutorial ansehen
+  - *Administrator benachrichtigen*
 
 #Aktoren
   - Benutzer

@@ -11,7 +11,7 @@
 
 ##Nachbedingung:
   - Benutzer muss von Administrator freigeschalten werden um die App als Author verwenden zu können
-
+  
 ##Fehlersituation:
   - Benutzer beantwortet die Fragen nach zu Abschluss der Registrierung falsch
 

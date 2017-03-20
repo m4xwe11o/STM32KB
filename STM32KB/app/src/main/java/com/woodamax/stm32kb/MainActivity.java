@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //Method which has to be created when you use an menu
+    //You can get the items defined in my_menu.xml
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_info){
