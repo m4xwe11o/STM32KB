@@ -1,7 +1,7 @@
 **Use Case - Author registrieren**
 
 ##Name:
-  - Athor registrieren
+  - Author registrieren
 
 ##Kurzbeschreibung:
   - Ein Anwender kann sich für die STM32 KB (Knowledge Base) registrieren
