@@ -12,7 +12,9 @@
   *Warum?*
     - Sollen den Text aufpeppen
   *Wie?*
-  - Augewählte Google Bilder
+  - Augewählte Google
+  *Welche Funktion?*
+  - wenn bilf geöffnet wird, soll mit einem wisch die pinbelegung angezeigt werden
 
 #App icons
   - [Link]https://material.io/icons/
