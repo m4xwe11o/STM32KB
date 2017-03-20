@@ -25,7 +25,8 @@
   - Backlogs
   - Entwicklen von Modulen `prototyping`
   - UI Mockups `Baslamiq`
-  - TDD `wichtige Module`
+#TDD
+  - `wichtige Module`
   - Start with the simplest one first `darauf dann aufbauen und erweitern`
 
 **ANDROID TRAINING**
