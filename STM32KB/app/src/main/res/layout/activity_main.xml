@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.woodamax.stm32kb.MainActivity"
     android:orientation="vertical">
-    <!--Used for Android devices lower that Lollipop Android 5.0-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
