@@ -6,6 +6,7 @@ import android.support.v7.view.menu.MenuAdapter;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +20,10 @@ public class MainActivity extends AppCompatActivity {
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
+
+        LoginClickListener clickListener = new LoginClickListener();
+        Button login = (Button) findViewById(R.id.my_login_button);
+        login.setOnClickListener(clickListener);
     }
 
     // Menu icons are inflated just as they were with actionbar
