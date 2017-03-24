@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Switch;
 import android.widget.Toast;
 
 public class RegisterScreen extends AppCompatActivity {
@@ -28,6 +29,10 @@ public class RegisterScreen extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+        SwitchClickListener clickListener = new SwitchClickListener();
+        Switch myswitch = (Switch) findViewById(R.id.register_switch);
+        myswitch.setOnClickListener(clickListener);
+
     }
 
     // Menu icons are inflated just as they were with actionbar
