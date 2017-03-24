@@ -21,6 +21,9 @@ public class LoginScreen extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_login_toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
+        //Rewrite the title
+        toolbar.setTitle("");
+        //chenge the background color
         toolbar.setBackgroundColor(Color.parseColor("#F44336"));
         setSupportActionBar(toolbar);
         
