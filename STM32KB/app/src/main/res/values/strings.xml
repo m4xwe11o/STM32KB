@@ -9,4 +9,7 @@
     <string name="login_password_hint">Enter Password!</string>
     <string name="login_submit">Submit</string>
     <string name="login_back">Back</string>
+    <string name="red_string">Red</string>
+    <string name="blue_string">Blue</string>
+    <string name="green_string">Green</string>
 </resources>
