@@ -32,9 +32,6 @@ public class LoginScreen extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        LoginBackClickListener clickListener = new LoginBackClickListener();
-        Button backtostart = (Button) findViewById(R.id.my_login_back_button);
-        backtostart.setOnClickListener(clickListener);
     }
 
     // Menu icons are inflated just as they were with actionbar
