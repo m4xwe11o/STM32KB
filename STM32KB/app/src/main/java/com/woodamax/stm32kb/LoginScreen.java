@@ -114,15 +114,14 @@ public class LoginScreen extends AppCompatActivity {
                     contentwriter.flush();
                     contentwriter.close();
 
-                    //
+                    //the answer stream is readble and is checked below if user exists ij DB an password is correct
                     InputStream answerstream = connection.getInputStream();
                     final String answer = getTextFromInputStream(answerstream);
-
-                    //This was for testing to rewrite the view with an answer
 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            //if the user exists and the password is correct than the string OK is added to the answer by the server
                             if(answer.matches("OK")){
                                 Toast.makeText(getApplicationContext(),"Username and Password correct",Toast.LENGTH_SHORT).show();
                             }else{
