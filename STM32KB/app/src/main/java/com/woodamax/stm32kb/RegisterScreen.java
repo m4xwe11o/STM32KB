@@ -49,15 +49,14 @@ public class RegisterScreen extends AppCompatActivity {
                     //if the switch is checked the button is clackable an color turned into BLACK
                     mysubmitbutton.setTextColor(Color.BLACK);
                     mysubmitbutton.setClickable(true);
+                    SubmitClickListener clickListener = new SubmitClickListener();
+                    mysubmitbutton.setOnClickListener(clickListener);
                 }else{
                     mysubmitbutton.setTextColor(Color.GRAY);
                     mysubmitbutton.setClickable(false);
                 }
             }
         });
-
-        SubmitClickListener clickListener = new SubmitClickListener();
-        mysubmitbutton.setOnClickListener(clickListener);
     }
 
     // Menu icons are inflated just as they were with actionbar
