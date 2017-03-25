@@ -1,7 +1,11 @@
 package com.woodamax.stm32kb;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v4.net.ConnectivityManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,9 +13,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+
 public class LoginScreen extends AppCompatActivity {
+
+    EditText username;
+    EditText password;
+    Button submit;
+
+    //canhe when switching the server
+    final String scripturlstring = "http://m4xwe11o.ddns.net/MAD-Test/sentoserver.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +55,110 @@ public class LoginScreen extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        //define the variables
+        username = (EditText) findViewById(R.id.login_user_username);
+        password = (EditText) findViewById(R.id.login_user_password);
+        submit = (Button) findViewById(R.id.my_login_submit_button);
+
+        //this is the clicklisterner for the submitbutton
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(internetAvailable()){
+                    //call the function to send data to the server
+                    sendToServer(username.getText().toString(),password.getText().toString());
+                }else{
+                    //either v.getContext() or getApplicationContext
+                    Toast.makeText(getApplicationContext(),"Check Internet connectivity",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
     }
 
+    //Method to send the entered text to server
+    public void sendToServer(final String text, final String text2){
+
+        //it should run in the background because there's happening so many things
+        //when using a thread, the sendToServer method need final declaration
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //text which has to be transmitted to the server with specified parameters
+                    //certain types must match to the php script
+                    //encode it to UTF-8
+                    String textparam = "text1=" + URLEncoder.encode(text, "UTF-8") + "&text2=" +URLEncoder.encode(text2, "UTF-8");
+
+                    //now build the url
+                    URL scripturl = new URL(scripturlstring);
+                    //generate an Http connection to server / better performance
+                    HttpURLConnection connection = (HttpURLConnection) scripturl.openConnection();
+                    //We have to send data
+                    connection.setDoOutput(true);
+                    //set the connection properties
+                    connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                    //tel the function how many bytes the text has
+                    connection.setFixedLengthStreamingMode(textparam.getBytes().length);
+
+                    //used to send data and connect it with the connection
+                    OutputStreamWriter contentwriter = new OutputStreamWriter(connection.getOutputStream());
+                    contentwriter.write(textparam);
+                    contentwriter.flush();
+                    contentwriter.close();
+
+                    //
+                    //InputStream answerstream = connection.getInputStream();
+                    //final String answer = getTextFromInputStream(answerstream);
+
+                    //This was for testing to rewrite the view with an answer
+                    /*
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tvusername.setText(answer);
+                        }
+                    });*/
+                    //answerstream.close();
+                    connection.disconnect();
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+    }
+
+    //funtion to read the servers answer
+    /*
+    public String getTextFromInputStream(InputStream is){
+        BufferedReader reader = new BufferedReader(new InputStreamReader((is)));
+        StringBuilder stringbuilder = new StringBuilder();
+        String actualline;
+        try {
+            while ((actualline = reader.readLine()) != null ){
+                stringbuilder.append(actualline);
+                stringbuilder.append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return stringbuilder.toString().trim();
+    }*/
+
+    // submit is only available when connectivity is here or if its here soon
+    public boolean internetAvailable(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        //get info from active network
+        NetworkInfo networkinfo = connectivityManager.getActiveNetworkInfo();
+        //both have to be true to return true
+        return networkinfo != null && networkinfo.isConnectedOrConnecting();
+    }
     // Menu icons are inflated just as they were with actionbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
