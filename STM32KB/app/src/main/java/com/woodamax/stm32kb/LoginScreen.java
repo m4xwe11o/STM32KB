@@ -124,9 +124,9 @@ public class LoginScreen extends AppCompatActivity {
                         @Override
                         public void run() {
                             if(answer.matches("OK")){
-                                Toast.makeText(getApplicationContext(),"Username matches DB",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Username and Password correct",Toast.LENGTH_SHORT).show();
                             }else{
-                                Toast.makeText(getApplicationContext(),"Username doesn't exist",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Username or Password wrong",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
