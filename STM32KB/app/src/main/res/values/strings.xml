@@ -4,7 +4,7 @@
     <string name="start_register">Sign Up</string>
     <string name="start_reading">Start reading now!</string>
     <string name="login_username">Username:</string>
-    <string name="login_username_hint">Enter username!</string>
+    <string name="login_username_hint">Enter Username!</string>
     <string name="login_password">Password:</string>
     <string name="login_password_hint">Enter Password!</string>
     <string name="login_submit">Submit</string>

@@ -66,8 +66,14 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(internetAvailable()){
-                    //call the function to send data to the server
-                    sendToServer(username.getText().toString(),password.getText().toString());
+                    if( username.getText().toString().matches("") || password.getText().toString().matches("")){
+                        //call the function to send data to the server
+                        Toast.makeText(getApplicationContext(),"No Username or Password entered",Toast.LENGTH_LONG).show();
+                    }else{
+
+                        sendToServer(username.getText().toString(),password.getText().toString());
+                    }
+
                 }else{
                     //either v.getContext() or getApplicationContext
                     Toast.makeText(getApplicationContext(),"Check Internet connectivity",Toast.LENGTH_LONG).show();
