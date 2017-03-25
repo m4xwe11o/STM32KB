@@ -140,7 +140,7 @@
         android:layout_gravity="center_horizontal|bottom"
         android:paddingBottom="25dp">
         <Button
-            android:id="@+id/my_login_button"
+            android:id="@+id/register_back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -148,9 +148,9 @@
             android:layout_marginRight="25dp"
             android:layout_weight="1"
             android:backgroundTint="@color/ToolbarWhite"
-            android:text="@string/start_login"/>
+            android:text="@string/login_back"/>
         <Button
-            android:id="@+id/my_sign_up_button"
+            android:id="@+id/register_submit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -158,7 +158,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:backgroundTint="@color/ToolbarWhite"
-            android:text="@string/start_register"/>
+            android:text="@string/register_submit"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -17,4 +17,5 @@
                          </string>
     <string name="login_password_confirm_hint">Confirm Password!</string>
     <string name="confim_agb">Accept AGB</string>
+    <string name="register_submit">Submit</string>
 </resources>

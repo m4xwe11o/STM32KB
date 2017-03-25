@@ -6,10 +6,16 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class RegisterScreen extends AppCompatActivity {
+
+    Switch myswitch;
+    Button mysubmitbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +35,29 @@ public class RegisterScreen extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        SwitchClickListener clickListener = new SwitchClickListener();
-        Switch myswitch = (Switch) findViewById(R.id.register_switch);
-        myswitch.setOnClickListener(clickListener);
 
+        //solution for making the submitbutton clickable only if ACCEPT AGB is set
+        myswitch = (Switch) findViewById(R.id.register_switch);
+        mysubmitbutton = (Button) findViewById(R.id.register_submit_button);
+        // setting the button by default to GRAY
+        mysubmitbutton.setTextColor(Color.GRAY);
+        mysubmitbutton.setClickable(false);
+        myswitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(myswitch.isChecked()){
+                    //if the switch is checked the button is clackable an color turned into BLACK
+                    mysubmitbutton.setTextColor(Color.BLACK);
+                    mysubmitbutton.setClickable(true);
+                }else{
+                    mysubmitbutton.setTextColor(Color.GRAY);
+                    mysubmitbutton.setClickable(false);
+                }
+            }
+        });
+
+        SubmitClickListener clickListener = new SubmitClickListener();
+        mysubmitbutton.setOnClickListener(clickListener);
     }
 
     // Menu icons are inflated just as they were with actionbar
