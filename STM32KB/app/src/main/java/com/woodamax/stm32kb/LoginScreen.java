@@ -68,7 +68,7 @@ public class LoginScreen extends AppCompatActivity {
                 if(internetAvailable()){
                     if( username.getText().toString().matches("") || password.getText().toString().matches("")){
                         //call the function to send data to the server
-                        Toast.makeText(getApplicationContext(),"No Username or Password entered",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"No Username or Password entered",Toast.LENGTH_LONG).show();
                     }else{
 
                         sendToServer(username.getText().toString(),password.getText().toString());
@@ -76,7 +76,7 @@ public class LoginScreen extends AppCompatActivity {
 
                 }else{
                     //either v.getContext() or getApplicationContext
-                    Toast.makeText(getApplicationContext(),"Check Internet connectivity",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Check Internet connectivity",Toast.LENGTH_LONG).show();
                 }
             }
         });
