@@ -34,7 +34,7 @@ public class LoginScreen extends AppCompatActivity {
     Button submit;
 
     //canhe when switching the server
-    final String scripturlstring = "http://m4xwe11o.ddns.net/MAD-Test/sentoserver.php";
+    final String scripturlstring = "http://m4xwe11o.ddns.net/MAD-Test/db_query_script.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,18 +115,22 @@ public class LoginScreen extends AppCompatActivity {
                     contentwriter.close();
 
                     //
-                    //InputStream answerstream = connection.getInputStream();
-                    //final String answer = getTextFromInputStream(answerstream);
+                    InputStream answerstream = connection.getInputStream();
+                    final String answer = getTextFromInputStream(answerstream);
 
                     //This was for testing to rewrite the view with an answer
-                    /*
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            tvusername.setText(answer);
+                            if(answer.matches("OK")){
+                                Toast.makeText(getApplicationContext(),"Username matches DB",Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(getApplicationContext(),"Username doesn't exist",Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    });*/
-                    //answerstream.close();
+                    });
+                    answerstream.close();
                     connection.disconnect();
 
                 } catch (MalformedURLException e) {
@@ -140,7 +144,7 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     //funtion to read the servers answer
-    /*
+
     public String getTextFromInputStream(InputStream is){
         BufferedReader reader = new BufferedReader(new InputStreamReader((is)));
         StringBuilder stringbuilder = new StringBuilder();
@@ -155,7 +159,7 @@ public class LoginScreen extends AppCompatActivity {
         }
 
         return stringbuilder.toString().trim();
-    }*/
+    }
 
     // submit is only available when connectivity is here or if its here soon
     public boolean internetAvailable(){
