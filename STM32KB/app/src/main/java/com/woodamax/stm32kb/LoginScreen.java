@@ -9,6 +9,7 @@ import android.support.v4.net.ConnectivityManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -124,6 +125,11 @@ public class LoginScreen extends AppCompatActivity {
                             if(answer.contains("OK")){
                                 Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
                                 Toast.makeText(getApplicationContext(),"Username and Password correct",Toast.LENGTH_SHORT).show();
+                                if(answer.contains("Yes")){
+                                    Toast.makeText(getApplicationContext(),"Allowed to Login",Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(getApplicationContext(),"Not allowed to Login yet!",Toast.LENGTH_SHORT).show();
+                                }
                             }else{
                                 Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
                                 Toast.makeText(getApplicationContext(),"Username or Password wrong",Toast.LENGTH_SHORT).show();
@@ -179,6 +185,7 @@ public class LoginScreen extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        password = (EditText) findViewById(R.id.login_user_password);
         //To change the color in the action bar we need to define the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_login_toolbar);
         // handle arrow click here
@@ -186,7 +193,12 @@ public class LoginScreen extends AppCompatActivity {
             finish(); // close this activity and return to preview activity (if there is any)
         }
         if (item.getItemId() == R.id.login_menu_list){
-            Toast.makeText(LoginScreen.this,"Clicked on info",Toast.LENGTH_SHORT).show();
+            if(password.getTransformationMethod()==null){
+                password.setTransformationMethod(new PasswordTransformationMethod());
+            }else{
+                Toast.makeText(LoginScreen.this,"Showing password",Toast.LENGTH_SHORT).show();
+                password.setTransformationMethod(null);
+            }
         }
 
         //Just something for customazation
