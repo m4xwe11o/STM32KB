@@ -70,7 +70,6 @@ public class LoginScreen extends AppCompatActivity {
                         //call the function to send data to the server
                         Toast.makeText(getApplicationContext(),"No Username or Password entered",Toast.LENGTH_LONG).show();
                     }else{
-
                         sendToServer(username.getText().toString(),password.getText().toString());
                     }
 
@@ -122,9 +121,11 @@ public class LoginScreen extends AppCompatActivity {
                         @Override
                         public void run() {
                             //if the user exists and the password is correct than the string OK is added to the answer by the server
-                            if(answer.matches("OK")){
+                            if(answer.contains("OK")){
+                                Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
                                 Toast.makeText(getApplicationContext(),"Username and Password correct",Toast.LENGTH_SHORT).show();
                             }else{
+                                Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
                                 Toast.makeText(getApplicationContext(),"Username or Password wrong",Toast.LENGTH_SHORT).show();
                             }
                         }
