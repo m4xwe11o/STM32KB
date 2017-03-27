@@ -3,6 +3,7 @@ package com.woodamax.stm32kb;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.net.ConnectivityManagerCompat;
@@ -188,15 +189,20 @@ public class LoginScreen extends AppCompatActivity {
         password = (EditText) findViewById(R.id.login_user_password);
         //To change the color in the action bar we need to define the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_login_toolbar);
-        // handle arrow click here
+        Drawable myDrawableOn = getResources().getDrawable(R.drawable.ic_visibility_white_24dp);
+        Drawable myDrawableOff = getResources().getDrawable(R.drawable.ic_visibility_off_white_24dp);
+        //Need to be defined to change the visibilty icon when clicked on "show password"
+        MenuItem eyeList = toolbar.getMenu().findItem(R.id.login_menu_show_password);
+        //Handle arrow click here
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
         }
-        if (item.getItemId() == R.id.login_menu_list){
+        if (item.getItemId() == R.id.login_menu_show_password || item.getItemId() == R.id.login_menu_show_password_text){
             if(password.getTransformationMethod()==null){
+                eyeList.setIcon(myDrawableOff);
                 password.setTransformationMethod(new PasswordTransformationMethod());
             }else{
-                Toast.makeText(LoginScreen.this,"Showing password",Toast.LENGTH_SHORT).show();
+                eyeList.setIcon(myDrawableOn);
                 password.setTransformationMethod(null);
             }
         }
