@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.method.PasswordTransformationMethod;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,7 +37,7 @@ public class LoginScreen extends AppCompatActivity {
     EditText password;
     Button submit;
     Toast toast;
-
+    DisplayMetrics displayMetrics = new DisplayMetrics();
     //change when switching the server
     final String scripturlstring = "http://m4xwe11o.ddns.net/MAD-Test/db_query_script.php";
 
@@ -175,7 +176,7 @@ public class LoginScreen extends AppCompatActivity {
 
     public void makeUserToast(String message){
         toast = Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP,0,850);
+        toast.setGravity(Gravity.CENTER_VERTICAL,0,200);
         toast.show();
     }
 
