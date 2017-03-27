@@ -203,6 +203,7 @@ public class LoginScreen extends AppCompatActivity {
                 password.setTransformationMethod(new PasswordTransformationMethod());
             }else{
                 eyeList.setIcon(myDrawableOn);
+                item.setTitle("Hide Password");
                 password.setTransformationMethod(null);
             }
         }
