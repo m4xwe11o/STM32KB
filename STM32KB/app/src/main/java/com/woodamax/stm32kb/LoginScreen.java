@@ -193,6 +193,7 @@ public class LoginScreen extends AppCompatActivity {
         Drawable myDrawableOff = getResources().getDrawable(R.drawable.ic_visibility_off_white_24dp);
         //Need to be defined to change the visibilty icon when clicked on "show password"
         MenuItem eyeList = toolbar.getMenu().findItem(R.id.login_menu_show_password);
+        MenuItem textList = toolbar.getMenu().findItem(R.id.login_menu_show_password_text);
         //Handle arrow click here
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
@@ -200,10 +201,13 @@ public class LoginScreen extends AppCompatActivity {
         if (item.getItemId() == R.id.login_menu_show_password || item.getItemId() == R.id.login_menu_show_password_text){
             if(password.getTransformationMethod()==null){
                 eyeList.setIcon(myDrawableOff);
+                eyeList.setTitle(R.string.show_password);
+                textList.setTitle(R.string.show_password);
                 password.setTransformationMethod(new PasswordTransformationMethod());
             }else{
                 eyeList.setIcon(myDrawableOn);
-                item.setTitle("Hide Password");
+                eyeList.setTitle(R.string.hide_password);
+                textList.setTitle(R.string.hide_password);
                 password.setTransformationMethod(null);
             }
         }
