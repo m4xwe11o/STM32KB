@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ public class LoginScreen extends AppCompatActivity {
     EditText username;
     EditText password;
     Button submit;
+    Toast toast;
 
     //canhe when switching the server
     final String scripturlstring = "http://m4xwe11o.ddns.net/MAD-Test/db_query_script.php";
@@ -70,14 +72,18 @@ public class LoginScreen extends AppCompatActivity {
                 if(internetAvailable()){
                     if( username.getText().toString().matches("") || password.getText().toString().matches("")){
                         //call the function to send data to the server
-                        Toast.makeText(getApplicationContext(),"No Username or Password entered",Toast.LENGTH_LONG).show();
+                        toast = Toast.makeText(getApplicationContext(),"No Username or Password entered",Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP,0,700);
+                        toast.show();
                     }else{
                         sendToServer(username.getText().toString(),password.getText().toString());
                     }
 
                 }else{
                     //either v.getContext() or getApplicationContext
-                    Toast.makeText(getApplicationContext(),"Check Internet connectivity",Toast.LENGTH_LONG).show();
+                    toast = Toast.makeText(getApplicationContext(),"Check Internet connectivity",Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP,0,700);
+                    toast.show();
                 }
             }
         });
@@ -125,15 +131,29 @@ public class LoginScreen extends AppCompatActivity {
                             //if the user exists and the password is correct than the string OK is added to the answer by the server
                             if(answer.contains("OK")){
                                 Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
-                                Toast.makeText(getApplicationContext(),"Username and Password correct",Toast.LENGTH_SHORT).show();
+                                toast = Toast.makeText(getApplicationContext(),"Username and Password correct",Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.TOP,0,700);
+                                toast.show();
                                 if(answer.contains("Yes")){
-                                    Toast.makeText(getApplicationContext(),"Allowed to Login",Toast.LENGTH_SHORT).show();
+                                    toast = Toast.makeText(getApplicationContext(),"Allowed to Login",Toast.LENGTH_SHORT);
+                                    toast.setGravity(Gravity.TOP,0,700);
+                                    toast.show();
                                 }else {
-                                    Toast.makeText(getApplicationContext(),"Not allowed to Login yet!",Toast.LENGTH_SHORT).show();
+                                    toast = Toast.makeText(getApplicationContext(),"Not allowed to Login yet!",Toast.LENGTH_SHORT);
+                                    toast.setGravity(Gravity.TOP,0,700);
+                                    toast.show();
                                 }
+                            }
+                            if(answer.contains("Locked")){
+                                Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
+                                toast = Toast.makeText(getApplicationContext(),"Sorry, user is locked",Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.TOP,0,700);
+                                toast.show();
                             }else{
                                 Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
-                                Toast.makeText(getApplicationContext(),"Username or Password wrong",Toast.LENGTH_SHORT).show();
+                                toast = Toast.makeText(getApplicationContext(),"Username or Password wrong",Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.TOP,0,700);
+                                toast.show();
                             }
                         }
                     });
