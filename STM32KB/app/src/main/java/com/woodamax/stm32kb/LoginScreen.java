@@ -37,7 +37,7 @@ public class LoginScreen extends AppCompatActivity {
     EditText password;
     Button submit;
     Toast toast;
-    DisplayMetrics displayMetrics = new DisplayMetrics();
+
     //change when switching the server
     final String scripturlstring = "http://m4xwe11o.ddns.net/MAD-Test/db_query_script.php";
 
