@@ -4,9 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".LoginScreen">
     <item
-        android:id="@+id/login_menu_list"
-        android:icon="@drawable/ic_info_white_24dp"
-        app:showAsAction="ifRoom"
+        android:id="@+id/login_menu_show_password_text"
+        android:title="Show password"
+        app:showAsAction="always">
+
+    </item>
+    <item
+        android:id="@+id/login_menu_show_password"
+        android:icon="@drawable/ic_visibility_off_white_24dp"
+        app:showAsAction="always"
         android:title="List">
     </item>
     <group

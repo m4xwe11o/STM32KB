@@ -3,12 +3,16 @@ package com.woodamax.stm32kb;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.net.ConnectivityManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.PasswordTransformationMethod;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,8 +36,9 @@ public class LoginScreen extends AppCompatActivity {
     EditText username;
     EditText password;
     Button submit;
+    Toast toast;
 
-    //canhe when switching the server
+    //change when switching the server
     final String scripturlstring = "http://m4xwe11o.ddns.net/MAD-Test/db_query_script.php";
 
     @Override
@@ -46,7 +51,7 @@ public class LoginScreen extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         //Rewrite the title
         toolbar.setTitle("");
-        //chenge the background color
+        //change the background color
         toolbar.setBackgroundColor(Color.parseColor("#F44336"));
         setSupportActionBar(toolbar);
         
@@ -68,14 +73,13 @@ public class LoginScreen extends AppCompatActivity {
                 if(internetAvailable()){
                     if( username.getText().toString().matches("") || password.getText().toString().matches("")){
                         //call the function to send data to the server
-                        Toast.makeText(getApplicationContext(),"No Username or Password entered",Toast.LENGTH_LONG).show();
+                        makeUserToast("No Username or Password entered");
                     }else{
                         sendToServer(username.getText().toString(),password.getText().toString());
                     }
-
                 }else{
                     //either v.getContext() or getApplicationContext
-                    Toast.makeText(getApplicationContext(),"Check Internet connectivity",Toast.LENGTH_LONG).show();
+                    makeUserToast("Check Internet connectivity");
                 }
             }
         });
@@ -121,12 +125,22 @@ public class LoginScreen extends AppCompatActivity {
                         @Override
                         public void run() {
                             //if the user exists and the password is correct than the string OK is added to the answer by the server
+                            //enable Toast with answer messages only for debugging
+                            if(answer.contains("Locked")){
+                                //Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
+                                makeUserToast("Sorry, user is locked");
+                            }
                             if(answer.contains("OK")){
-                                Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
-                                Toast.makeText(getApplicationContext(),"Username and Password correct",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
+                                makeUserToast("Username and Password correct");
+                                if(answer.contains("Yes")){
+                                    makeUserToast("Allowed to Login");
+                                }else {
+                                    makeUserToast("Not allowed to Login yet!");
+                                }
                             }else{
-                                Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
-                                Toast.makeText(getApplicationContext(),"Username or Password wrong",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
+                                makeUserToast("Username or Password wrong");
                             }
                         }
                     });
@@ -143,8 +157,7 @@ public class LoginScreen extends AppCompatActivity {
         }).start();
     }
 
-    //funtion to read the servers answer
-
+    //function to read the servers answer
     public String getTextFromInputStream(InputStream is){
         BufferedReader reader = new BufferedReader(new InputStreamReader((is)));
         StringBuilder stringbuilder = new StringBuilder();
@@ -159,6 +172,12 @@ public class LoginScreen extends AppCompatActivity {
         }
 
         return stringbuilder.toString().trim();
+    }
+
+    public void makeUserToast(String message){
+        toast = Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL,0,200);
+        toast.show();
     }
 
     // submit is only available when connectivity is here or if its here soon
@@ -179,14 +198,30 @@ public class LoginScreen extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        password = (EditText) findViewById(R.id.login_user_password);
         //To change the color in the action bar we need to define the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_login_toolbar);
-        // handle arrow click here
+        Drawable myDrawableOn = getResources().getDrawable(R.drawable.ic_visibility_white_24dp);
+        Drawable myDrawableOff = getResources().getDrawable(R.drawable.ic_visibility_off_white_24dp);
+        //Need to be defined to change the visibilty icon when clicked on "show password"
+        MenuItem eyeList = toolbar.getMenu().findItem(R.id.login_menu_show_password);
+        MenuItem textList = toolbar.getMenu().findItem(R.id.login_menu_show_password_text);
+        //Handle arrow click here
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
         }
-        if (item.getItemId() == R.id.login_menu_list){
-            Toast.makeText(LoginScreen.this,"Clicked on info",Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.login_menu_show_password || item.getItemId() == R.id.login_menu_show_password_text){
+            if(password.getTransformationMethod()==null){
+                eyeList.setIcon(myDrawableOff);
+                eyeList.setTitle(R.string.show_password);
+                textList.setTitle(R.string.show_password);
+                password.setTransformationMethod(new PasswordTransformationMethod());
+            }else{
+                eyeList.setIcon(myDrawableOn);
+                eyeList.setTitle(R.string.hide_password);
+                textList.setTitle(R.string.hide_password);
+                password.setTransformationMethod(null);
+            }
         }
 
         //Just something for customazation
