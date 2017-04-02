@@ -1,12 +1,9 @@
 package com.woodamax.stm32kb;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 public class ArticleScreen extends AppCompatActivity {
@@ -18,7 +15,7 @@ public class ArticleScreen extends AppCompatActivity {
 
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ArtcileSelectionFragment article = new ArtcileSelectionFragment();
+        ArticleSelectionFragment article = new ArticleSelectionFragment();
         ft.replace(android.R.id.content, article);
         ft.commit();
     }

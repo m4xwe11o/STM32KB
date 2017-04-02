@@ -23,7 +23,7 @@ import java.util.List;
  * Created by maxim on 02.04.2017.
  */
 
-public class ArtcileSelectionFragment extends Fragment {
+public class ArticleSelectionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
