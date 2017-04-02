@@ -15,6 +15,7 @@ public class ArticleScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_screen);
 
+        //When the activity is called the fragment is used as the view
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ArticleSelectionFragment article = new ArticleSelectionFragment();
@@ -23,6 +24,7 @@ public class ArticleScreen extends AppCompatActivity {
         // add back arrow to toolbar
 
     }
+
     // Menu icons are inflated just as they were with actionbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -20,19 +20,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="15dp">
+
         <Spinner
             android:id="@+id/article_micro_controller_spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-        </Spinner>
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:paddingTop="15dp"></Spinner>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="10">
+            android:layout_weight="1">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@string/lorum"
+                android:textSize="15sp" />
         </ScrollView>
     </LinearLayout>
 </LinearLayout>

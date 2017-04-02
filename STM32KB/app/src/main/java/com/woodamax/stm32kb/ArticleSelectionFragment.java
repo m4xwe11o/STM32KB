@@ -25,13 +25,7 @@ import java.util.List;
  */
 
 public class ArticleSelectionFragment extends Fragment {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        setHasOptionsMenu(true);
-
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
@@ -51,11 +45,16 @@ public class ArticleSelectionFragment extends Fragment {
         }
 
         //used to fill the spinner
-        String [] values = getResources().getStringArray(R.array.micro_controllers);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, values);
+        //this is one method to do this
+        //String [] values = getResources().getStringArray(R.array.micro_controllers);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, values);
+        //adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+
+        //This uses an different design for the spinner
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.micro_controllers, R.layout.my_spinner_item);
         Spinner microControllerSpinner = (Spinner) view.findViewById(R.id.article_micro_controller_spinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         microControllerSpinner.setAdapter(adapter);
+
         return view;
     }
 
