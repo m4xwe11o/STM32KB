@@ -24,10 +24,13 @@ public class MainActivity extends AppCompatActivity {
 
         LoginClickListener clickListener = new LoginClickListener();
         RegisterClickListener clickListener1 = new RegisterClickListener();
+        StartReadingClickListener clickListener2 = new StartReadingClickListener();
         Button login = (Button) findViewById(R.id.my_login_button);
         Button register = (Button) findViewById(R.id.my_sign_up_button);
+        Button reading = (Button) findViewById(R.id.my_start_reading_button);
         login.setOnClickListener(clickListener);
         register.setOnClickListener(clickListener1);
+        reading.setOnClickListener(clickListener2);
     }
 
     // Menu icons are inflated just as they were with actionbar

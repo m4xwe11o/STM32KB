@@ -20,4 +20,10 @@
     <string name="register_submit">Submit</string>
     <string name="show_password">Show Password</string>
     <string name="hide_password">Hide Password</string>
+    <string-array name="micro_controllers">
+        <item>Select Controllers</item>
+        <item>STM32F103RB</item>
+        <item>STM32F303K8</item>
+        <item>STM32F446RE</item>
+    </string-array>
 </resources>
