@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ArticleScreen">
     <item
-        android:id="@+id/login_menu_show_password_text"
+        android:id="@+id/reading_view"
         android:title="VIEW"
         app:showAsAction="always"
         >
 
     </item>
     <item
-        android:id="@+id/login_menu_show_password"
+        android:id="@+id/reading_edit"
         app:showAsAction="always"
         android:title="EDIT">
     </item>

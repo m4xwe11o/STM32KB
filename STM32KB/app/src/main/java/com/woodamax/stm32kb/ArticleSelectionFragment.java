@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -25,6 +26,13 @@ import java.util.List;
 
 public class ArticleSelectionFragment extends Fragment {
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+
+    }
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.article_selection, container, false);
@@ -36,7 +44,11 @@ public class ArticleSelectionFragment extends Fragment {
         //change the background color
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
-        //activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // add back arrow to toolbar
+        if (activity.getSupportActionBar() != null){
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         //used to fill the spinner
         String [] values = getResources().getStringArray(R.array.micro_controllers);
@@ -44,8 +56,10 @@ public class ArticleSelectionFragment extends Fragment {
         Spinner microControllerSpinner = (Spinner) view.findViewById(R.id.article_micro_controller_spinner);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         microControllerSpinner.setAdapter(adapter);
-
         return view;
     }
+
+
+
 
 }
