@@ -5,15 +5,13 @@
     tools:context=".ArticleScreen">
     <item
         android:id="@+id/reading_view"
-        android:title="VIEW"
-        app:showAsAction="always"
-        >
-
+        android:title="@string/article_file"
+        app:showAsAction="always">
     </item>
     <item
         android:id="@+id/reading_edit"
         app:showAsAction="always"
-        android:title="EDIT">
+        android:title="@string/article_feedback">
     </item>
 
 </menu>
