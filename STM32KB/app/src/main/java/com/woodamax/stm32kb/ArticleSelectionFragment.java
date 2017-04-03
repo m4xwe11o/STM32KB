@@ -10,8 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
@@ -44,6 +46,8 @@ public class ArticleSelectionFragment extends Fragment {
             activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        //Used to rewrite the text for each categorie
+        final TextView none = (TextView) view.findViewById(R.id.article_text);
         //used to fill the spinner
         //this is one method to do this
         //String [] values = getResources().getStringArray(R.array.micro_controllers);
@@ -52,8 +56,39 @@ public class ArticleSelectionFragment extends Fragment {
 
         //This uses an different design for the spinner
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.micro_controllers, R.layout.my_spinner_item);
-        Spinner microControllerSpinner = (Spinner) view.findViewById(R.id.article_micro_controller_spinner);
+        final Spinner microControllerSpinner = (Spinner) view.findViewById(R.id.article_micro_controller_spinner);
         microControllerSpinner.setAdapter(adapter);
+        //Click Listener for the items inside the spinner
+        int selectionCurrent = microControllerSpinner.getSelectedItemPosition();
+        microControllerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                if(selectedItem.equals("Select Controller")){
+                    //Keeps crashing on 4.2.2 with getContext()
+                    Toast.makeText(view.getContext(),selectedItem,Toast.LENGTH_SHORT).show();
+                    none.setText("");
+                }
+                if(selectedItem.equals("STM32F1")){
+                    //Keeps crashing on 4.2.2 with getContext()
+                    Toast.makeText(view.getContext(),selectedItem,Toast.LENGTH_SHORT).show();
+                    none.setText(getString(R.string.controller_f1));
+                }
+                if(selectedItem.equals("STM32F3")){
+                    Toast.makeText(view.getContext(),selectedItem,Toast.LENGTH_SHORT).show();
+                    none.setText(getString(R.string.controller_f3));
+                }
+                if(selectedItem.equals("STM32F4")){
+                    Toast.makeText(view.getContext(),selectedItem,Toast.LENGTH_SHORT).show();
+                    none.setText(getString(R.string.controller_f4));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         return view;
     }

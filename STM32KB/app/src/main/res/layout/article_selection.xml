@@ -27,7 +27,7 @@
             android:id="@+id/article_micro_controller_spinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="8"
+            android:layout_weight="5"
             android:paddingTop="15dp"></Spinner>
 
         <ScrollView
@@ -36,10 +36,10 @@
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/article_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
-                android:text="@string/lorum"
                 android:textSize="15sp" />
         </ScrollView>
     </LinearLayout>

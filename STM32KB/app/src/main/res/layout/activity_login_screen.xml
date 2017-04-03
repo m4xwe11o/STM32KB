@@ -92,14 +92,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal|bottom"
-            android:paddingBottom="25dp">
+            android:paddingBottom="10dp">
             <Button
                 android:id="@+id/my_login_back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/ToolbarWhite"
                 android:text="@string/login_back"/>
@@ -109,8 +109,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_weight="1"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:backgroundTint="@color/ToolbarWhite"
                 android:text="@string/login_submit"/>
         </LinearLayout>

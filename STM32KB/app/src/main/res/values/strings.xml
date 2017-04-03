@@ -21,7 +21,11 @@
     <string name="show_password">Show Password</string>
     <string name="hide_password">Hide Password</string>
     <string name="article_select_controller">Select a controller</string>
+    <string name="controller_f1">STM32F1</string>
+    <string name="controller_f3">STM32F3</string>
+    <string name="controller_f4">STM32F4</string>
     <string-array name="micro_controllers">
+        <item>Select Controller</item>
         <item>STM32F1</item>
         <item>STM32F3</item>
         <item>STM32F4</item>
