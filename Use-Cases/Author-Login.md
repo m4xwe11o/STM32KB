@@ -1,7 +1,5 @@
 **Use Case - Beschreibung**
 
-test
-
 ##Name:
   - Authoren Login
 
