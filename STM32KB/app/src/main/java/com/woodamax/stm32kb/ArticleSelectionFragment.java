@@ -66,7 +66,6 @@ public class ArticleSelectionFragment extends Fragment {
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 if(selectedItem.equals("Select Controller")){
                     //Keeps crashing on 4.2.2 with getContext()
-                    Toast.makeText(view.getContext(),selectedItem,Toast.LENGTH_SHORT).show();
                     none.setText("");
                 }
                 if(selectedItem.equals("STM32F1")){

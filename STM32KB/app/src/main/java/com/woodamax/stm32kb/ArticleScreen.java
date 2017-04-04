@@ -23,6 +23,7 @@ public class ArticleScreen extends AppCompatActivity {
         ft.commit();
         // add back arrow to toolbar
 
+
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -34,11 +35,11 @@ public class ArticleScreen extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.reading_edit){
-            Toast.makeText(getApplicationContext(),"EDIT",Toast.LENGTH_SHORT).show();
+        if(item.getItemId() == R.id.reading_feedback){
+            Toast.makeText(getApplicationContext(),"Feedback",Toast.LENGTH_SHORT).show();
         }
-        if(item.getItemId() == R.id.reading_view){
-            Toast.makeText(getApplicationContext(),"VIEW",Toast.LENGTH_SHORT).show();
+        if(item.getItemId() == R.id.reading_file){
+            Toast.makeText(getApplicationContext(),"file",Toast.LENGTH_SHORT).show();
         }
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
