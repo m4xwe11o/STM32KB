@@ -2,8 +2,6 @@ package com.woodamax.stm32kb;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,7 @@ public class ArticleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.article_selection, container, false);
+        View view=inflater.inflate(R.layout.article_selection_fragment, container, false);
         //Used to rewrite the text for each categorie
         final TextView none = (TextView) view.findViewById(R.id.article_text);
         //used to fill the spinner
@@ -42,7 +40,7 @@ public class ArticleFragment extends Fragment {
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 if(selectedItem.equals("Select Controller")){
                     //Keeps crashing on 4.2.2 with getContext()
-                    //none.setText("");
+                    none.setText("");
                 }
                 if(selectedItem.equals("STM32F1")){
                     //Keeps crashing on 4.2.2 with getContext()
