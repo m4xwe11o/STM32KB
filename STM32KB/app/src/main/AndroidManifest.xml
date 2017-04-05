@@ -29,7 +29,8 @@
             android:name=".RegisterScreen"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".ArticleScreen"></activity>
+        <activity android:name=".ArticleScreen"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
