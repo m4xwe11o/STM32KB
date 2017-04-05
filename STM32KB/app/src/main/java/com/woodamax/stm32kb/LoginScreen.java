@@ -1,6 +1,7 @@
 package com.woodamax.stm32kb;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -95,6 +96,7 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+                    username = (EditText) findViewById(R.id.login_user_username);
                     //text which has to be transmitted to the server with specified parameters
                     //certain types must match to the php script
                     //encode it to UTF-8
@@ -134,7 +136,10 @@ public class LoginScreen extends AppCompatActivity {
                                 //Toast.makeText(getApplicationContext(),answer,Toast.LENGTH_SHORT).show();
                                 makeUserToast("Username and Password correct");
                                 if(answer.contains("Yes")){
-                                    makeUserToast("Allowed to Login");
+                                    //makeUserToast("Allowed to Login");
+                                    Intent intent = new Intent (getApplicationContext(), ArticleScreen.class);
+                                    intent.putExtra(ArticleScreen.EXTRA_MESSAGE,username.getText().toString());
+                                    startActivity(intent);
                                 }else {
                                     makeUserToast("Not allowed to Login yet!");
                                 }

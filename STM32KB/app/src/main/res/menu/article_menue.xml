@@ -9,6 +9,18 @@
         app:showAsAction="always">
     </item>
     <item
+        android:id="@+id/reading_edit"
+        android:title="EDIT"
+        android:visible="false"
+        app:showAsAction="always">
+    </item>
+    <item
+        android:id="@+id/reading_create"
+        android:title="CREATE"
+        app:showAsAction="always"
+        android:visible="false">
+    </item>
+    <item
         android:id="@+id/reading_feedback"
         app:showAsAction="always"
         android:title="@string/article_feedback">
