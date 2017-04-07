@@ -1,5 +1,6 @@
 package com.woodamax.stm32kb;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import android.widget.ToggleButton;
 public class RegisterScreen extends AppCompatActivity {
 
     Switch myswitch;
-    Button mysubmitbutton;
+    Button mysubmitbutton,mybackbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class RegisterScreen extends AppCompatActivity {
         //solution for making the submitbutton clickable only if ACCEPT AGB is set
         myswitch = (Switch) findViewById(R.id.register_switch);
         mysubmitbutton = (Button) findViewById(R.id.register_submit_button);
+        mybackbutton = (Button) findViewById(R.id.register_back_button);
         // setting the button by default to GRAY
         mysubmitbutton.setTextColor(Color.GRAY);
         mysubmitbutton.setClickable(false);
@@ -55,6 +57,13 @@ public class RegisterScreen extends AppCompatActivity {
                     mysubmitbutton.setTextColor(Color.GRAY);
                     mysubmitbutton.setClickable(false);
                 }
+            }
+        });
+        mybackbutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
     }
