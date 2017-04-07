@@ -31,7 +31,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-
+/**
+ * Created by maxim on 07.04.2017.
+ * No longer needed since its used with the new Activity LoginScreenAsync which uses an Async Task als BackgroundTask
+ * This is better than using a Thread
+ */
 public class LoginScreen extends AppCompatActivity {
 
     EditText username;

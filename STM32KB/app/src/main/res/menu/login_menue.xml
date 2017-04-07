@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LoginScreen">
+    tools:context=".LoginScreenAsync">
     <item
         android:id="@+id/login_menu_show_password_text"
         android:title="Show password"
