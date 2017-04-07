@@ -33,14 +33,14 @@ public class SubmitClickListener implements View.OnClickListener{
                 email.getText().toString(),
                 password.getText().toString(),
                 confirmpassword.getText().toString())){
-            /*BackgroundWorker backgroundWorker = new BackgroundWorker(view.getContext());
+            BackgroundWorker backgroundWorker = new BackgroundWorker(view.getContext());
             backgroundWorker.execute(type,
                     surname.getText().toString(),
                     firstname.getText().toString(),
                     address.getText().toString(),
                     email.getText().toString(),
                     password.getText().toString(),
-                    confirmpassword.getText().toString());*/
+                    confirmpassword.getText().toString());
             toast.makeText(view.getContext(),"Registration is complete",Toast.LENGTH_SHORT).show();
         }else{
             toast.makeText(view.getContext(),"Please fill in all fields!",Toast.LENGTH_SHORT).show();
@@ -48,16 +48,13 @@ public class SubmitClickListener implements View.OnClickListener{
 
     }
     public boolean validateInput(String var1,String var2, String var3, String var4, String var5, String var6){
-        if( (var1 != " ") && (var2 != " ") && (var3 != " ") && (var4 != " ") && (var5 != " ") && (var6 != " ") ){
-            if( !(var4.contains("@"))){
-                return false;
-            }
-            if( (var5 != var6)){
-                return false;
-            }
-            return true;
-        }else{
-            return false;
-        }
+        if(var1 == " ") return false;
+        if(var2 == " ") return false;
+        if(var3 == " ") return false;
+        if(!(var4.contains("@"))) return false;
+        if(var5 == " ") return false;
+        if(var6 == " ") return false;
+        if(!(var5.equals(var6)) ) return false;
+        return true;
     }
 }
