@@ -128,7 +128,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
 
     @Override
     protected void onPostExecute(String result) {
-        toast.makeText(context.getApplicationContext(),result.toString(),Toast.LENGTH_SHORT).show();
+        //toast.makeText(context.getApplicationContext(),result.toString(),Toast.LENGTH_SHORT).show();
         if(result.toString() == ""){
             toast.makeText(context.getApplicationContext(),"User not found!",Toast.LENGTH_SHORT).show();
         }

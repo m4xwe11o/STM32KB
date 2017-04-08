@@ -104,7 +104,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/lorum"
+                    android:text="@string/agb"
                     android:textSize="15sp"
                     android:fontFamily="monospace" />
             </ScrollView>
