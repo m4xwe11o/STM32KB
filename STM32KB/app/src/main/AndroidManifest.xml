@@ -29,7 +29,10 @@
             android:name=".RegisterScreen"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".ArticleScreen"
+        <activity
+            android:name=".ArticleScreen"
+            android:screenOrientation="portrait" />
+        <activity android:name=".LoginScreenAsync"
             android:screenOrientation="portrait"/>
     </application>
 
