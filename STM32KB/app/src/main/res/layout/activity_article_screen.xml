@@ -23,7 +23,7 @@
             android:id="@+id/article_text_container_bottom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="15"></FrameLayout>
+            android:layout_weight="8"></FrameLayout>
     </LinearLayout>
 
 </LinearLayout>

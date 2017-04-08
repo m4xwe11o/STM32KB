@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -18,17 +19,22 @@ import org.w3c.dom.Text;
 public class BottomFragment extends Fragment {
     public static final String EXTRA_MESSAGE = "message";
     String messageText;
+    Button back;
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.article_bottom_fragment, container, false);
         Intent intent = getActivity().getIntent();
         messageText = intent.getStringExtra(EXTRA_MESSAGE);
-        TextView hello = (TextView) view.findViewById(R.id.article_text_bottom);
-        if(messageText == null){
-            hello.setText("Hello Reader!");
-        }else{
-            hello.setText("Hello " + messageText.toString() + " !");
-        }
+        back = (Button) view.findViewById(R.id.my_reading_back_button);
+        back.setOnClickListener(
+                new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent (v.getContext(), MainActivity.class);
+                        getActivity().startActivity(intent);
+                    }
+                }
+        );
         return view;
     }
 }

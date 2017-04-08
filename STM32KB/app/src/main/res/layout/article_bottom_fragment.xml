@@ -2,10 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/article_text_bottom"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:gravity="center"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal|bottom"
+        android:paddingBottom="10dp">
+        <Button
+            android:id="@+id/my_reading_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/ToolbarWhite"
+            android:text="@string/login_back"/>
+        <Button
+            android:id="@+id/my_reading_submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/ToolbarWhite"
+            android:text="@string/login_submit"
+            android:visibility="invisible"/>
+    </LinearLayout>
 </LinearLayout>
