@@ -73,6 +73,7 @@ public class ArticleFragment extends Fragment {
         return view;
     }
 
+    //TODO dynamic view for the discription via DB query
     private void addArticlePreview(String controller) {
         LinearLayout rootView = (LinearLayout) getActivity().findViewById(R.id.article_selection_preview);
         TextView tile = new TextView(getActivity());
