@@ -45,6 +45,7 @@ public class ArticleFragment extends Fragment {
                 if(selectedItem.equals("Select Controller")){
                     //Keeps crashing on 4.2.2 with getContext()
                     //none.setText("");
+                    addArticlePreview("none");
                 }
                 if(selectedItem.equals("STM32F1")){
                     //Keeps crashing on 4.2.2 with getContext()
@@ -101,6 +102,8 @@ public class ArticleFragment extends Fragment {
                 desc.setText("This is an description for the "+ controller + "ADC configuration...");
                 desc.setTextSize(15);
                 rootView.addView(desc);
+                break;
+            default:
                 break;
         }
     }
