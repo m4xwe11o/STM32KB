@@ -25,12 +25,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/article_text"
+            <LinearLayout
+                android:id="@+id/article_selection_preview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:textSize="15sp" />
+                android:orientation="vertical">
+            </LinearLayout>
         </ScrollView>
     </LinearLayout>
 </LinearLayout>

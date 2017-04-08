@@ -45,9 +45,10 @@
     <string name="article_file">File</string>
     <string name="agb">Ihre Email Adresse wir für die validierung ihrer Daten verwendet.
         Nach erfolgreicher validierung wir ein Administrator ihren Usernamen und ihr Password elektronisch übermitteln.
-        Es ist verboten Texte mit gewaltverherrlichendem, sexistischem oder verletzendem Inhalt zu veröffentlichen.
+        Es ist verboten Texte mit gewaltverherrlichenden, sexistischem oder verletzendem Inhalt zu veröffentlichen.
         Weiters wird ein Administrator den erstellten Artikel korrekturlesen und ggf. löschen falls die AGB verletzt werden.
-        Die von Ihnen zur Verfügung gestellten Personen bezogenen Daten dienen Ausschließlich der nachvollziehbarkeit eines erstelltn Artikels.</string>
+        Die zur Verfügung gestellten Personen bezogenen Daten dienen ausschließlich der nachvollziehbarkeit eines erstellten Artikels.
+        Wenn Sie den Button aktivieren akzeptieren sie die hier angeführten AGB!</string>
     <string-array name="micro_controllers">
         <item>Select Controller</item>
         <item>STM32F1</item>
