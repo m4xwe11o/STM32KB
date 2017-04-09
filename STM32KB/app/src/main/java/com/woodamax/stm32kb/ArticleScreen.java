@@ -27,7 +27,7 @@ public class ArticleScreen extends AppCompatActivity {
         android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
         ft.add(R.id.article_toolbar,toolbar,"Toolbar fragment");
         ft.add(R.id.article_text_container, article, "Article selection Fragment");
-        ft.add(R.id.article_text_container_bottom, bottom, "Bootm Text");
+        ft.add(R.id.article_text_container_bottom, bottom, "Bottom Text");
         ft.commit();
         // add back arrow to toolbar
 
