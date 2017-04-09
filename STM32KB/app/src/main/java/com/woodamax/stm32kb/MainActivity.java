@@ -35,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(clickListener);
         register.setOnClickListener(clickListener1);
         reading.setOnClickListener(clickListener2);
-        //Better deleting the Database at the beginning... Than working on one of the creepy methods....
-        deleteDatabase(DATABASE_NAME);
+
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -51,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_info){
             Toast.makeText(MainActivity.this,"Fetching articles",Toast.LENGTH_SHORT).show();
-
+            //Better deleting the Database at the beginning... Than working on one of the creepy methods....
+            deleteDatabase(DATABASE_NAME);
             fetchArticles();
         }else{
             Toast.makeText(MainActivity.this,"Debuging database",Toast.LENGTH_SHORT).show();
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Show all data
-        showMessage("Data",buffer.toString());
+        showMessage("Local Database",buffer.toString());
     }
 
     public void showMessage(String title,String Message){
