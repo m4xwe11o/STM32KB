@@ -1,16 +1,14 @@
 package com.woodamax.stm32kb;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
-
+//TODO calling a new Fragment for the Article Reading via the Article Selection Fragment
+/**
+ * This new Fragment should be called when one of the previewed articles is selected via the ArticleSelectionFragemnt
+ */
 public class ArticleScreen extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "message";
 
@@ -21,7 +19,7 @@ public class ArticleScreen extends AppCompatActivity {
 
         //When the activity is called the fragment is used as the view
         ToolbarFragment toolbar = new ToolbarFragment();
-        ArticleFragment article = new ArticleFragment();
+        ArticleSelectionFragment article = new ArticleSelectionFragment();
         BottomFragment bottom = new BottomFragment();
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();

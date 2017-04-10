@@ -36,6 +36,7 @@ import java.net.URLEncoder;
  * No longer needed since its used with the new Activity LoginScreenAsync which uses an Async Task als BackgroundTask
  * This is better than using a Thread
  */
+//TODO can be deleted due to a better performance of LoginScreenAsync
 public class LoginScreen extends AppCompatActivity {
 
     EditText username;

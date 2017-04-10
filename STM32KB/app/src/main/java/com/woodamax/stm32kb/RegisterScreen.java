@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
+//TODO implement the show password function like the LoginScreenAsync
 public class RegisterScreen extends AppCompatActivity {
 
     Switch myswitch;

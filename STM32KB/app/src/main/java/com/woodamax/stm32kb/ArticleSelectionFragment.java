@@ -19,7 +19,7 @@ import org.w3c.dom.Text;
  * Created by maxim on 05.04.2017.
  */
 
-public class ArticleFragment extends Fragment {
+public class ArticleSelectionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
