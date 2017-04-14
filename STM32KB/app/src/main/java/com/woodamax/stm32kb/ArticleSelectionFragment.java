@@ -88,6 +88,7 @@ public class ArticleSelectionFragment extends Fragment {
                 buildSelectionView(controller);
                 break;
             default:
+                buildSelectionView(controller);
                 break;
         }
     }
