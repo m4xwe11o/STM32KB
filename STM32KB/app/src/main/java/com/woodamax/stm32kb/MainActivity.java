@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             buffer.append("Id :"+ res.getString(0)+"\n");
             buffer.append("Title :"+ res.getString(1)+"\n");
             buffer.append("Description :"+ res.getString(2)+"\n");
-            Toast.makeText(this,"DEBUG Message",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,"DEBUG Message",Toast.LENGTH_SHORT).show();
         }
 
         // Show all data

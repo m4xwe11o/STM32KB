@@ -200,9 +200,9 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         while(scanner.hasNextLine()){
             String line = scanner.nextLine();
             String title = line.substring(line.indexOf("{")+1,line.indexOf("}"));
-            toast.makeText(context,title,Toast.LENGTH_SHORT).show();
+            //toast.makeText(context,title,Toast.LENGTH_SHORT).show();
             String desc = line.substring(line.indexOf("(")+1,line.indexOf(")"));
-            toast.makeText(context,desc,Toast.LENGTH_SHORT).show();
+            //toast.makeText(context,desc,Toast.LENGTH_SHORT).show();
             //myDBH.insertData(title,desc," "," ");
             insertIntoDatabase(title,desc);
         }
@@ -214,7 +214,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         Cursor res = myDBH.getArticleDescription();
         if(res.getCount() == 0) {
             // show message
-            toast.makeText(context,"Inserting values",Toast.LENGTH_SHORT).show();
+            //toast.makeText(context,"Inserting values",Toast.LENGTH_SHORT).show();
             myDBH.insertData(title,desc," "," ");
             return;
         }
@@ -222,14 +222,14 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         StringBuffer buffer = new StringBuffer();
         while (res.moveToNext()) {
             if(title.equals(res.getString(1)) || desc.equals(res.getString(2))){
-                toast.makeText(context,title,Toast.LENGTH_SHORT).show();
-                toast.makeText(context," Title value allready exists",Toast.LENGTH_SHORT).show();
-                toast.makeText(context,desc,Toast.LENGTH_SHORT).show();
-                toast.makeText(context," Desc value allready exists",Toast.LENGTH_SHORT).show();
+                //toast.makeText(context,title,Toast.LENGTH_SHORT).show();
+                //toast.makeText(context," Title value allready exists",Toast.LENGTH_SHORT).show();
+                //toast.makeText(context,desc,Toast.LENGTH_SHORT).show();
+                //toast.makeText(context," Desc value allready exists",Toast.LENGTH_SHORT).show();
                 return;
             }
         }
-        toast.makeText(context,"Inserting values",Toast.LENGTH_SHORT).show();
+        //toast.makeText(context,"Inserting values",Toast.LENGTH_SHORT).show();
         myDBH.insertData(title,desc," "," ");
     }
 
