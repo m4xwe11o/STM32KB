@@ -51,13 +51,13 @@ public class ToolbarFragment extends Fragment {
     @Override
     public void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(getContext(), "On Create", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "On Create", Toast.LENGTH_SHORT).show();
         setHasOptionsMenu(true);
     }
     @Override
     public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
         // Do something that differs the Activity's menu here
-        Toast.makeText(getContext(), "On Create Options Menu", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "On Create Options Menu", Toast.LENGTH_SHORT).show();
         if(messageText == null){
             menu.findItem(R.id.reading_edit).setVisible(false);
         }else{
