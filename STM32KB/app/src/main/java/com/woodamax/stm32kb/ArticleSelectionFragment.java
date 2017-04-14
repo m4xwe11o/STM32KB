@@ -1,5 +1,6 @@
 package com.woodamax.stm32kb;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import org.w3c.dom.Text;
  */
 
 public class ArticleSelectionFragment extends Fragment {
+    DatabaseHelper myDBH;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,37 +77,53 @@ public class ArticleSelectionFragment extends Fragment {
 
     //TODO dynamic view for the discription via DB query
     private void addArticlePreview(String controller) {
-        LinearLayout rootView = (LinearLayout) getActivity().findViewById(R.id.article_selection_preview);
-        TextView tile = new TextView(getActivity());
-        TextView desc = new TextView(getActivity());
-        rootView.removeAllViews();
         switch (controller){
             case "STM32F1":
-                tile.setText(controller + " - ADC");
-                tile.setTextSize(25);
-                rootView.addView(tile);
-                desc.setText("This is an description for the " + controller + " ADC configuration...");
-                desc.setTextSize(15);
-                rootView.addView(desc);
+                buildSelectionView(controller);
                 break;
             case "STM32F3":
-                tile.setText(controller + " - ADC");
-                tile.setTextSize(25);
-                rootView.addView(tile);
-                desc.setText("This is an description for the "+ controller + "ADC configuration...");
-                desc.setTextSize(15);
-                rootView.addView(desc);
+                buildSelectionView(controller);
                 break;
             case "STM32F4":
-                tile.setText(controller + " - ADC");
-                tile.setTextSize(25);
-                rootView.addView(tile);
-                desc.setText("This is an description for the "+ controller + "ADC configuration...");
-                desc.setTextSize(15);
-                rootView.addView(desc);
+                buildSelectionView(controller);
                 break;
             default:
                 break;
         }
+    }
+
+    private void buildSelectionView(String controller) {
+        //This is the parentview
+        ScrollView parentView = (ScrollView) getActivity().findViewById(R.id.article_selection_preview);
+        LinearLayout childview = new LinearLayout(getActivity());
+        //Because we build a new view, we have to define the xml parameters
+        childview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        childview.setOrientation(LinearLayout.VERTICAL);
+        //finally remove everything
+        parentView.removeAllViews();
+        myDBH = new DatabaseHelper(getActivity());
+        Cursor res = myDBH.getArticleDescription();
+        while (res.moveToNext()) {
+            if(res.getString(1).contains(controller)){
+                //Used to build the childview
+                TextView title = new TextView(getActivity());
+                TextView desc = new TextView(getActivity());
+                //set params for the title
+                title.setText(res.getString(1));
+                title.setTextSize(25);
+                title.setPadding(10,0,10,0);
+                title.setId(Integer.parseInt(res.getString(0)));
+                //set the params for the description
+                desc.setText(res.getString(2));
+                desc.setTextSize(15);
+                desc.setPadding(10,0,10,50);
+                desc.setId(Integer.parseInt(res.getString(0)));
+                //add the views
+                childview.addView(title);
+                childview.addView(desc);
+            }
+        }
+        //add the child to their parents
+        parentView.addView(childview);
     }
 }
