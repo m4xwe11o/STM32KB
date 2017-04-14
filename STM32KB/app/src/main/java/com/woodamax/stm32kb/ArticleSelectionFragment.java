@@ -61,7 +61,7 @@ public class ArticleSelectionFragment extends Fragment {
                     addArticlePreview("STM32F3");
                 }
                 if(selectedItem.equals("STM32F4")){
-                    Toast.makeText(view.getContext(),selectedItem,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(view.getContext(),selectedItem,Toast.LENGTH_SHORT).show();
                     //none.setText(getString(R.string.controller_f4));
                     addArticlePreview("STM32F4");
                 }
