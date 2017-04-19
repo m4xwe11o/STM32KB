@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         register.setOnClickListener(clickListener1);
         reading.setOnClickListener(clickListener2);
 
+        checkForNewArticles();
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -92,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
     //This method calls the background worker to get the articles
     private void fetchArticles() {
         String type = "FetchArticleDescription";
+        String article = "article";
+        BackgroundWorker backgroundworker = new BackgroundWorker(this);
+        backgroundworker.execute(type,article);
+    }
+
+    private void checkForNewArticles() {
+        String type = "FetchNewArticle";
         String article = "article";
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
         backgroundworker.execute(type,article);

@@ -40,6 +40,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         String login_url = "http://m4xwe11o.ddns.net/MAD-Test/login.php";
         String register_url = "http://m4xwe11o.ddns.net/MAD-Test/register.php";
         String fetch_article_url = "http://m4xwe11o.ddns.net/MAD-Test/fetch_article.php";
+        String fetch_new_artcie_url = "http://m4xwe11o.ddns.net/MAD-Test/fetch_new_article.php";
         if(type.equals("Login")){
             try{
                 String username = params[1];
@@ -155,6 +156,41 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if(type.equals("FetchNewArticle")){
+            try {
+                String article = params[1];
+                URL url = new URL(fetch_new_artcie_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("article", "UTF-8") + "=" + URLEncoder.encode(article, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
@@ -176,6 +212,14 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
             toast.makeText(context.getApplicationContext(),"Query sucessfull",Toast.LENGTH_SHORT).show();
             getNewArticles(result);
         }
+        if(result.contains("Numbers")){
+            toast.makeText(context.getApplicationContext(),"Query sucessfull",Toast.LENGTH_SHORT).show();
+            if (checkForNewArticlclesInDb(result)){
+                toast.makeText(context.getApplicationContext(),"New articles available",Toast.LENGTH_SHORT).show();
+            }else{
+                toast.makeText(context.getApplicationContext(),"No new articles available",Toast.LENGTH_SHORT).show();
+            }
+        }
         if(result.contains("OK")){
             toast.makeText(context.getApplicationContext(),result.toString(),Toast.LENGTH_SHORT).show();
             if(result.contains("Yes")){
@@ -190,20 +234,30 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         }
     }
 
+    //This function checks if new articles are available by counting the numbers of article in the external DB
+    //Then it is compared with the article count of the internal DB
+    private boolean checkForNewArticlclesInDb(String result) {
+        myDBH = new DatabaseHelper(context);
+        Cursor res = myDBH.getArticleDescription();
+        result=result.replaceAll("Numbers: ", "");
+        while (res.moveToNext()) {
+            if(result.matches(res.getString(0))){
+                return false;
+            }
+        }
+        return true;
+    }
+
     //Creepy little function - it makes all the magic needed to parse the values correct
     //Wollmice said DON'T touch it !
     private void getNewArticles(String query) {
-        //myDBH = new DatabaseHelper(context);
         query=query.replaceAll("]", "X\n");
         toast.makeText(context.getApplicationContext(),query,Toast.LENGTH_SHORT).show();
         Scanner scanner = new Scanner(query);
         while(scanner.hasNextLine()){
             String line = scanner.nextLine();
             String title = line.substring(line.indexOf("{")+1,line.indexOf("}"));
-            //toast.makeText(context,title,Toast.LENGTH_SHORT).show();
             String desc = line.substring(line.indexOf("(")+1,line.indexOf(")"));
-            //toast.makeText(context,desc,Toast.LENGTH_SHORT).show();
-            //myDBH.insertData(title,desc," "," ");
             insertIntoDatabase(title,desc);
         }
     }
@@ -213,8 +267,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         myDBH = new DatabaseHelper(context);
         Cursor res = myDBH.getArticleDescription();
         if(res.getCount() == 0) {
-            // show message
-            //toast.makeText(context,"Inserting values",Toast.LENGTH_SHORT).show();
             myDBH.insertData(title,desc," "," ");
             return;
         }
@@ -222,14 +274,9 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         StringBuffer buffer = new StringBuffer();
         while (res.moveToNext()) {
             if(title.equals(res.getString(1)) || desc.equals(res.getString(2))){
-                //toast.makeText(context,title,Toast.LENGTH_SHORT).show();
-                //toast.makeText(context," Title value allready exists",Toast.LENGTH_SHORT).show();
-                //toast.makeText(context,desc,Toast.LENGTH_SHORT).show();
-                //toast.makeText(context," Desc value allready exists",Toast.LENGTH_SHORT).show();
                 return;
             }
         }
-        //toast.makeText(context,"Inserting values",Toast.LENGTH_SHORT).show();
         myDBH.insertData(title,desc," "," ");
     }
 
