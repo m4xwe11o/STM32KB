@@ -119,6 +119,13 @@ public class ArticleSelectionFragment extends Fragment {
                 desc.setTextSize(15);
                 desc.setPadding(10,0,10,50);
                 desc.setId(Integer.parseInt(res.getString(0)));
+                desc.setClickable(true);
+                desc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getSelectedArticle(v);
+                    }
+                });
                 //add the views
                 childview.addView(title);
                 childview.addView(desc);
@@ -126,5 +133,14 @@ public class ArticleSelectionFragment extends Fragment {
         }
         //add the child to their parents
         parentView.addView(childview);
+    }
+    private void getSelectedArticle(View v) {
+        myDBH = new DatabaseHelper(getActivity());
+        Cursor res = myDBH.getArticleDescription();
+        while(res.moveToNext()){
+            if(v.getId() == Integer.parseInt(res.getString(0))){
+                Toast.makeText(getContext(),res.getString(1), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

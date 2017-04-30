@@ -1,9 +1,11 @@
 package com.woodamax.stm32kb;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 //TODO calling a new Fragment for the Article Reading via the Article Selection Fragment
 /**
@@ -11,7 +13,7 @@ import android.widget.Toast;
  */
 public class ArticleScreen extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "message";
-
+    DatabaseHelper myDBH;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,17 +42,17 @@ public class ArticleScreen extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.reading_feedback){
-            Toast.makeText(getApplicationContext(),"FEEDBACK",Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.reading_feedback) {
+            Toast.makeText(getApplicationContext(), "FEEDBACK", Toast.LENGTH_SHORT).show();
         }
-        if(item.getItemId() == R.id.reading_file){
-            Toast.makeText(getApplicationContext(),"FILE",Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.reading_file) {
+            Toast.makeText(getApplicationContext(), "FILE", Toast.LENGTH_SHORT).show();
         }
-        if(item.getItemId() == R.id.reading_edit){
-            Toast.makeText(getApplicationContext(),"EDIT",Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.reading_edit) {
+            Toast.makeText(getApplicationContext(), "EDIT", Toast.LENGTH_SHORT).show();
         }
-        if(item.getItemId()== R.id.reading_create){
-            Toast.makeText(getApplicationContext(),"CREATE",Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.reading_create) {
+            Toast.makeText(getApplicationContext(), "CREATE", Toast.LENGTH_SHORT).show();
         }
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
