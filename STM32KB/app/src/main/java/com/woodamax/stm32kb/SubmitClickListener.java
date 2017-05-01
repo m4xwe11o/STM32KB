@@ -47,6 +47,17 @@ public class SubmitClickListener implements View.OnClickListener{
         }
 
     }
+
+    /**
+     * If it works... It isn't stupid
+     * @param var1 surname
+     * @param var2 firstname
+     * @param var3 address
+     * @param var4 email
+     * @param var5 password
+     * @param var6 confirmassword
+     * @return true/false wether input was correct or not
+     */
     public boolean validateInput(String var1,String var2, String var3, String var4, String var5, String var6){
         if(var1 == " ") return false;
         if(var2 == " ") return false;

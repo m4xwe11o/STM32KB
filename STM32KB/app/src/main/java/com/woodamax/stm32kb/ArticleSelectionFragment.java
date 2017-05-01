@@ -80,6 +80,10 @@ public class ArticleSelectionFragment extends Fragment {
         }
     }
 
+    /**
+     * Build the view to display the articles, correspondig to the spinner item
+     * @param controller selected spinner item
+     */
     private void buildSelectionView(String controller) {
         //This is the parentview
         ScrollView parentView = (ScrollView) getActivity().findViewById(R.id.article_selection_preview);
@@ -121,6 +125,12 @@ public class ArticleSelectionFragment extends Fragment {
         //add the child to their parents
         parentView.addView(childview);
     }
+
+    /**
+     * Method to change the view when an item is selected
+     * The helper is used to find the selected item in the readersviefragment
+     * @param v the actual view
+     */
     private void getSelectedArticle(View v) {
         myDBH = new DatabaseHelper(getActivity());
         Cursor res = myDBH.getArticleDescription();

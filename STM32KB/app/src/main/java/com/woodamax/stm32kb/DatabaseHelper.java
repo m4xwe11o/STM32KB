@@ -71,11 +71,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean updateDataDesc(String id, String desc){
+    public boolean updateDataText(String id, String text){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1,id);
-        contentValues.put(COL_3,desc);
+        contentValues.put(COL_5,text);
         db.update(TABLE_ARTICLE,contentValues,"ID = ?", new String[] {id});
         return true;
     }
