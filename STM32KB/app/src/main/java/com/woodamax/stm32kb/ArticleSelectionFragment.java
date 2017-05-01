@@ -29,13 +29,6 @@ public class ArticleSelectionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.article_selection_fragment, container, false);
-        //Used to rewrite the text for each categorie
-        //final TextView none = (TextView) view.findViewById(R.id.article_title);
-        //used to fill the spinner
-        //this is one method to do this
-        //String [] values = getResources().getStringArray(R.array.micro_controllers);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, values);
-        //adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
         //This uses an different design for the spinner
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.micro_controllers, R.layout.my_spinner_item);
@@ -48,24 +41,15 @@ public class ArticleSelectionFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 if(selectedItem.equals("Select Controller")){
-                    //Keeps crashing on 4.2.2 with getContext()
-                    //none.setText("");
                     addArticlePreview("none");
                 }
                 if(selectedItem.equals("STM32F1")){
-                    //Keeps crashing on 4.2.2 with getContext()
-                    //Toast.makeText(view.getContext(),selectedItem,Toast.LENGTH_SHORT).show();
-                    //none.setText(getString(R.string.controller_f1));
                     addArticlePreview("STM32F1");
                 }
                 if(selectedItem.equals("STM32F3")){
-                    //Toast.makeText(view.getContext(),selectedItem,Toast.LENGTH_SHORT).show();
-                    //none.setText(getString(R.string.controller_f3));
                     addArticlePreview("STM32F3");
                 }
                 if(selectedItem.equals("STM32F4")){
-                    //Toast.makeText(view.getContext(),selectedItem,Toast.LENGTH_SHORT).show();
-                    //none.setText(getString(R.string.controller_f4));
                     addArticlePreview("STM32F4");
                 }
             }
@@ -144,9 +128,10 @@ public class ArticleSelectionFragment extends Fragment {
         FragmentTransaction ft2 = fm2.beginTransaction();
         while(res.moveToNext()){
             if(v.getId() == Integer.parseInt(res.getString(0))){
-                Toast.makeText(getContext(),res.getString(1), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(),res.getString(1), Toast.LENGTH_SHORT).show();
+                //This objects helps to know which article was clicked
                 ArticleScreen.helper.setId(Integer.parseInt(res.getString(0)));
-                ArticleScreen.helper.setRead(true);
+                //Then create the Fragment and activate it
                 ReadersViewFragment readersview = new ReadersViewFragment();
                 ft2.addToBackStack(null);
                 ft2.hide(ArticleSelectionFragment.this);

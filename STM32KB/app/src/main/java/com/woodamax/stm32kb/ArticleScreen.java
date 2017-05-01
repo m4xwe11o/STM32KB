@@ -47,6 +47,7 @@ public class ArticleScreen extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //Used to find the Fragments
         Fragment cf = fm.findFragmentByTag("Article_reading_fragment");
         Fragment cf2 = fm.findFragmentByTag("Article_selection_Fragment");
         if (item.getItemId() == R.id.reading_feedback) {
@@ -62,11 +63,11 @@ public class ArticleScreen extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "CREATE", Toast.LENGTH_SHORT).show();
         }
         if (item.getItemId() == android.R.id.home) {
+            //This manages the step back to change the Fragments and be able to go to the Main Activity
             if(cf != null){
                 if(cf2.isVisible()){
                     finish();
                 }
-                Toast.makeText(this,"Article_reading_fragment", Toast.LENGTH_SHORT).show();
                 android.support.v4.app.FragmentManager fm3 = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction ft3 = fm3.beginTransaction();
                 ArticleSelectionFragment article = new ArticleSelectionFragment();

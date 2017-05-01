@@ -6,15 +6,6 @@ package com.woodamax.stm32kb;
 
 public class ArticleHelper {
     int Id;
-    boolean read;
-
-    public boolean isRead() {
-        return read;
-    }
-
-    public void setRead(boolean read) {
-        this.read = read;
-    }
 
     public int getId() {
         return Id;
