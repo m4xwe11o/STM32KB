@@ -3,6 +3,8 @@ package com.woodamax.stm32kb;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import org.w3c.dom.Text;
 
 public class ArticleSelectionFragment extends Fragment {
     DatabaseHelper myDBH;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -137,9 +140,18 @@ public class ArticleSelectionFragment extends Fragment {
     private void getSelectedArticle(View v) {
         myDBH = new DatabaseHelper(getActivity());
         Cursor res = myDBH.getArticleDescription();
+        FragmentManager fm2 = getFragmentManager();
+        FragmentTransaction ft2 = fm2.beginTransaction();
         while(res.moveToNext()){
             if(v.getId() == Integer.parseInt(res.getString(0))){
                 Toast.makeText(getContext(),res.getString(1), Toast.LENGTH_SHORT).show();
+                ArticleScreen.helper.setId(Integer.parseInt(res.getString(0)));
+                ArticleScreen.helper.setRead(true);
+                ReadersViewFragment readersview = new ReadersViewFragment();
+                ft2.addToBackStack(null);
+                ft2.hide(ArticleSelectionFragment.this);
+                ft2.add(R.id.article_text_container,readersview,"Article_reading_fragment");
+                ft2.commit();
             }
         }
     }

@@ -1,7 +1,9 @@
 package com.woodamax.stm32kb;
 
+import android.app.FragmentManager;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +15,11 @@ import android.widget.Toast;
  */
 public class ArticleScreen extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "message";
-    DatabaseHelper myDBH;
+    static ArticleHelper helper = new ArticleHelper();
+    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+    android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +29,10 @@ public class ArticleScreen extends AppCompatActivity {
         ToolbarFragment toolbar = new ToolbarFragment();
         ArticleSelectionFragment article = new ArticleSelectionFragment();
         BottomFragment bottom = new BottomFragment();
-        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.article_toolbar,toolbar,"Toolbar fragment");
-        ft.add(R.id.article_text_container, article, "Article selection Fragment");
-        ft.add(R.id.article_text_container_bottom, bottom, "Bottom Text");
+
+        ft.add(R.id.article_toolbar,toolbar,"Toolbar_fragment");
+        ft.add(R.id.article_text_container, article, "Article_selection_Fragment");
+        ft.add(R.id.article_text_container_bottom, bottom, "Bottom_Text");
         ft.commit();
         // add back arrow to toolbar
 
@@ -42,6 +47,8 @@ public class ArticleScreen extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Fragment cf = fm.findFragmentByTag("Article_reading_fragment");
+        Fragment cf2 = fm.findFragmentByTag("Article_selection_Fragment");
         if (item.getItemId() == R.id.reading_feedback) {
             Toast.makeText(getApplicationContext(), "FEEDBACK", Toast.LENGTH_SHORT).show();
         }
@@ -55,7 +62,21 @@ public class ArticleScreen extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "CREATE", Toast.LENGTH_SHORT).show();
         }
         if (item.getItemId() == android.R.id.home) {
-            finish(); // close this activity and return to preview activity (if there is any)
+            if(cf != null){
+                if(cf2.isVisible()){
+                    finish();
+                }
+                Toast.makeText(this,"Article_reading_fragment", Toast.LENGTH_SHORT).show();
+                android.support.v4.app.FragmentManager fm3 = getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction ft3 = fm3.beginTransaction();
+                ArticleSelectionFragment article = new ArticleSelectionFragment();
+                ft3.hide(cf);
+                ft3.replace(R.id.article_text_container, article, "Article_selection_Fragment");
+                ft3.detach(fm.findFragmentByTag("Article_reading_fragment"));
+                ft3.commit();
+            }else{
+                finish(); // close this activity and return to preview activity (if there is any)
+            }
         }
         return super.onOptionsItemSelected(item);
     }

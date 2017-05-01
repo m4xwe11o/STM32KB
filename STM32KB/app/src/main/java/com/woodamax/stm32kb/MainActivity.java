@@ -15,6 +15,7 @@ import static com.woodamax.stm32kb.DatabaseHelper.DATABASE_NAME;
 
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper myDBH;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
