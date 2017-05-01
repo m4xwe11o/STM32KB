@@ -1,6 +1,5 @@
 package com.woodamax.stm32kb;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -36,11 +35,23 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
 
     @Override
     protected String doInBackground(String... params) {
+
+        /**
+         * The background works uses 5 different php scripts:
+         * login.php                -> Used by the LoginScreen.java Activity
+         * register.php             -> Used by the RegisterScreen.java Activity followed by the SubmitClickListener.java
+         * fetch_article.php        -> Used to get the Title and the Description of an article from the external DB
+         * fetch_articletext.php    -> Used to get the Text for an article
+         * fetch_new_article.php    -> Used to get the actual number of all articles and compare them to the local DB
+         */
+
         String type = params[0];
         String login_url = "http://m4xwe11o.ddns.net/MAD-Test/login.php";
         String register_url = "http://m4xwe11o.ddns.net/MAD-Test/register.php";
         String fetch_article_url = "http://m4xwe11o.ddns.net/MAD-Test/fetch_article.php";
+        String fetch_articletext_url = "http://m4xwe11o.ddns.net/MAD-Test/fetch_articletext.php";
         String fetch_new_artcie_url = "http://m4xwe11o.ddns.net/MAD-Test/fetch_new_article.php";
+
         if(type.equals("Login")){
             try{
                 String username = params[1];
@@ -191,6 +202,41 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if(type.equals("FetchArticleText")){
+            try {
+                String article = params[1];
+                URL url = new URL(fetch_articletext_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("articletext", "UTF-8") + "=" + URLEncoder.encode(article, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
@@ -199,18 +245,37 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         //toast.makeText(context.getApplicationContext(),"Login Status",Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * The if's captures the message from the Server:
+     * Query        Returns the following values from the DB sorted by Title ASC:
+     *              ID
+     *              Title   -> inside {}
+     *              Description ->  inside ()
+     *
+     * Articletext  Returns the following values from the DB sorted by Title ASC:
+     *              ID  ->  inside {}
+     *              Articletext ->  inside ()
+     * Numbers      Returns the number of articles in the external DB
+     * OK           Returned when the username and password is correct
+     * YES          Returned with OK when the user is registered as author
+     * INSERT       Returned when the user wants to register
+     * @param result the server message
+     */
     @Override
     protected void onPostExecute(String result) {
         //Capture app crash
         if (result == null){result = "None";}
-        //toast.makeText(context.getApplicationContext(),result.toString(),Toast.LENGTH_SHORT).show();
 
         if(result.toString() == ""){
             toast.makeText(context.getApplicationContext(),"DB query not sucessfull",Toast.LENGTH_SHORT).show();
         }
         if(result.contains("Query")){
             toast.makeText(context.getApplicationContext(),"Query sucessfull",Toast.LENGTH_SHORT).show();
-            getNewArticles(result);
+            getNewArticlesDescription(result);
+        }
+        if(result.contains("Articletext")){
+            toast.makeText(context.getApplicationContext(),"Query articletext sucessfull",Toast.LENGTH_SHORT).show();
+            getNewArticlesText(result);
         }
         if(result.contains("Numbers")){
             toast.makeText(context.getApplicationContext(),"Query sucessfull",Toast.LENGTH_SHORT).show();
@@ -234,8 +299,12 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         }
     }
 
-    //This function checks if new articles are available by counting the numbers of article in the external DB
-    //Then it is compared with the article count of the internal DB
+    /**
+     * This function checks if new articles are available by counting the numbers of article in the external DB
+     * Then it is compared with the article count of the internal DB
+     * @param result the server message
+     * @return
+     */
     private boolean checkForNewArticlclesInDb(String result) {
         myDBH = new DatabaseHelper(context);
         Cursor res = myDBH.getArticleDescription();
@@ -248,9 +317,12 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         return true;
     }
 
-    //Creepy little function - it makes all the magic needed to parse the values correct
-    //Wollmice said DON'T touch it !
-    private void getNewArticles(String query) {
+    /**
+     * Creepy little function - it makes all the magic needed to parse the values correct
+     * Woolmice said DON'T touch it !
+     * @param query the server message
+     */
+    private void getNewArticlesDescription(String query) {
         query=query.replaceAll("]", "X\n");
         toast.makeText(context.getApplicationContext(),query,Toast.LENGTH_SHORT).show();
         Scanner scanner = new Scanner(query);
@@ -262,7 +334,41 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         }
     }
 
-    //Creepy little function too - it makes all the checks needed to insert data only if its not there
+    /**
+     * Creepy little function - it makes all the magic needed to parse the values correct
+     * Woölmice said DON'T touch it !
+     * @param query the server message
+     */
+    private void getNewArticlesText(String query) {
+        query=query.replaceAll("]", "X\n");
+        Scanner scanner = new Scanner(query);
+        String id = "1";
+        int id2;
+        while(scanner.hasNextLine()){
+            String line = scanner.nextLine();
+            String text = line.substring(line.indexOf("(")+1,line.indexOf(")"));
+            updateDatabase(id,text);
+            id2 = Integer.parseInt(id);
+            id2++;
+            id = Integer.toString(id2);
+        }
+    }
+
+    /**
+     * Used to update the existing articles with their text
+     * @param id used to identify the article in the local DB
+     * @param text the server message
+     */
+    private void updateDatabase(String id,String text) {
+        myDBH = new DatabaseHelper(context);
+        myDBH.updateDataText(id,text);
+    }
+
+    /**
+     * Creepy little function too - it makes all the checks needed to insert data only if its not there
+     * @param title the server message
+     * @param desc the server message
+     */
     private void insertIntoDatabase(String title, String desc) {
         myDBH = new DatabaseHelper(context);
         Cursor res = myDBH.getArticleDescription();

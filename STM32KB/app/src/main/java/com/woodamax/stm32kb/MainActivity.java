@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuAdapter;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_info){
-            Toast.makeText(MainActivity.this,"Fetching articles",Toast.LENGTH_SHORT).show();
             //Better deleting the Database at the beginning... Than working on one of the creepy methods....
             deleteDatabase(DATABASE_NAME);
-            fetchArticles();
+            //Toast.makeText(MainActivity.this,"Fetching articles description",Toast.LENGTH_SHORT).show();
+            fetchArticlesDescription();
+            //Toast.makeText(MainActivity.this,"Fetching articles text",Toast.LENGTH_SHORT).show();
+            fetchArticleText();
         }else{
             Toast.makeText(MainActivity.this,"Debuging database",Toast.LENGTH_SHORT).show();
             debugDatabse();
@@ -62,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Method to display the local DB
+     */
     private void debugDatabse() {
         myDBH = new DatabaseHelper(this);
         Cursor res = myDBH.getArticleDescription();
@@ -76,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             buffer.append("Id :"+ res.getString(0)+"\n");
             buffer.append("Title :"+ res.getString(1)+"\n");
             buffer.append("Description :"+ res.getString(2)+"\n");
+            buffer.append("Text :"+ res.getString(4)+"\n");
             //Toast.makeText(this,"DEBUG Message",Toast.LENGTH_SHORT).show();
         }
 
@@ -83,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
         showMessage("Local Database",buffer.toString());
     }
 
+    /**
+     * Build the alert screen to show the local DB
+     * @param title alert dialog title
+     * @param Message DB query result from the buffer
+     */
     public void showMessage(String title,String Message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
@@ -91,14 +101,29 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    //This method calls the background worker to get the articles
-    private void fetchArticles() {
+    /**
+     * This method calls the background worker to get the articles description and title
+     */
+    private void fetchArticlesDescription() {
         String type = "FetchArticleDescription";
         String article = "article";
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
         backgroundworker.execute(type,article);
     }
 
+    /**
+     * This method calls the background worker to get the articlestext
+     */
+    private void fetchArticleText() {
+        String type = "FetchArticleText";
+        String articletext = "articletext";
+        BackgroundWorker backgroundworker = new BackgroundWorker(this);
+        backgroundworker.execute(type,articletext);
+    }
+
+    /**
+     * This method calls the background worker to get the number of articles
+     */
     private void checkForNewArticles() {
         String type = "FetchNewArticle";
         String article = "article";

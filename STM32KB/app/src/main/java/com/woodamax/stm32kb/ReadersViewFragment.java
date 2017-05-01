@@ -23,12 +23,15 @@ public class ReadersViewFragment extends Fragment {
         return view;
     }
 
+    /**
+     * The helper helps to find the selected article
+     * The article object can be used to edit an article
+     * @param view the view which has to be build
+     */
     private void buildReadersView(View view) {
         myDBH = new DatabaseHelper(getActivity());
         Cursor res = myDBH.getArticleDescription();
         while (res.moveToNext()){
-            //the helper helps to find the selected article
-            //The article object can be used to edit an article
             if(ArticleScreen.helper.getId() == Integer.parseInt(res.getString(0))){
                 Article article = new Article(res.getString(1),res.getString(2),res.getString(3)," ");
                 TextView title = (TextView) view.findViewById(R.id.article_readers_view_title);
@@ -36,6 +39,7 @@ public class ReadersViewFragment extends Fragment {
                 TextView articletext = (TextView) view.findViewById(R.id.article_readers_view_text);
                 title.setText(res.getString(1));
                 description.setText(res.getString(2));
+                articletext.setText(res.getString(4));
             }
         }
     }
