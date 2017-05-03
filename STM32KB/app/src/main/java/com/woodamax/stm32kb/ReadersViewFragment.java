@@ -2,7 +2,6 @@ package com.woodamax.stm32kb;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ public class ReadersViewFragment extends Fragment {
     DatabaseHelper myDBH;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.article_readers_view_fragment,container,false);
         buildReadersView(view);
         return view;
