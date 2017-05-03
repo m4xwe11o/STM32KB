@@ -1,6 +1,7 @@
 package com.woodamax.stm32kb;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,6 +33,7 @@ public class ReadersViewFragment extends Fragment {
             articleButton.setVisibility(view.VISIBLE);
             if(MainActivity.fh.isAuthor()){
                 submitButton.setVisibility(view.VISIBLE);
+                submitButton.setTextColor(Color.GRAY);
                 submitButton.setClickable(false);
             }
         }
