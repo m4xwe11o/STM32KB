@@ -92,7 +92,6 @@ public class ArticleSelectionFragment extends Fragment {
         }
     }
 
-    //TODO dynamic view for the discription via DB query
     private void addArticlePreview(String controller) {
         switch (controller){
             case "STM32F1":

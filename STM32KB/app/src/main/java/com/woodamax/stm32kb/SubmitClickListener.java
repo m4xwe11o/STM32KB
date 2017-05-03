@@ -9,10 +9,10 @@ import android.widget.Toast;
  * Created by maxim on 25.03.2017.
  */
 
+//TODO add the questioning screen after filling in the registration form
 public class SubmitClickListener implements View.OnClickListener{
     EditText surname,firstname,address,email,password,confirmpassword;
     Toast toast;
-
 
     public void onClick(View view) {
         Toast.makeText(view.getContext(),"Good, you accepted the AGB",Toast.LENGTH_SHORT).show();
