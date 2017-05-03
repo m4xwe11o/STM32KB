@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -30,6 +31,16 @@ public class ArticleSelectionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.article_selection_fragment, container, false);
 
+        Button articleButton = (Button) getActivity().findViewById(R.id.my_reading_article_button);
+        Button submitButton = (Button) getActivity().findViewById(R.id.my_reading_submit_button);
+        if(MainActivity.fh.getCenter().equals("Article_selection_Fragment")){
+            articleButton.setVisibility(view.INVISIBLE);
+            if(MainActivity.fh.isAuthor()){
+                submitButton.setVisibility(view.INVISIBLE);
+            }
+        }
+
+        //Toast.makeText(getContext(),MainActivity.fh.getCenter(), Toast.LENGTH_SHORT).show();
         //This uses an different design for the spinner
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.micro_controllers, R.layout.my_spinner_item);
         final Spinner microControllerSpinner = (Spinner) view.findViewById(R.id.article_micro_controller_spinner);
@@ -138,6 +149,7 @@ public class ArticleSelectionFragment extends Fragment {
         FragmentTransaction ft2 = fm2.beginTransaction();
         while(res.moveToNext()){
             if(v.getId() == Integer.parseInt(res.getString(0))){
+                MainActivity.fh.setCenter("Article_reading_fragment");
                 //Toast.makeText(getContext(),res.getString(1), Toast.LENGTH_SHORT).show();
                 //This objects helps to know which article was clicked
                 ArticleScreen.helper.setId(Integer.parseInt(res.getString(0)));

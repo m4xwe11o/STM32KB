@@ -33,17 +33,16 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
     }
     DatabaseHelper myDBH;
 
+    /**
+     * The background works uses 5 different php scripts:
+     * login.php                -> Used by the LoginScreen.java Activity
+     * register.php             -> Used by the RegisterScreen.java Activity followed by the SubmitClickListener.java
+     * fetch_article.php        -> Used to get the Title and the Description of an article from the external DB
+     * fetch_articletext.php    -> Used to get the Text for an article
+     * fetch_new_article.php    -> Used to get the actual number of all articles and compare them to the local DB
+     */
     @Override
     protected String doInBackground(String... params) {
-
-        /**
-         * The background works uses 5 different php scripts:
-         * login.php                -> Used by the LoginScreen.java Activity
-         * register.php             -> Used by the RegisterScreen.java Activity followed by the SubmitClickListener.java
-         * fetch_article.php        -> Used to get the Title and the Description of an article from the external DB
-         * fetch_articletext.php    -> Used to get the Text for an article
-         * fetch_new_article.php    -> Used to get the actual number of all articles and compare them to the local DB
-         */
 
         String type = params[0];
         String login_url = "http://m4xwe11o.ddns.net/MAD-Test/login.php";
@@ -270,23 +269,21 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
             toast.makeText(context.getApplicationContext(),"DB query not sucessfull",Toast.LENGTH_SHORT).show();
         }
         if(result.contains("Query")){
-            toast.makeText(context.getApplicationContext(),"Query sucessfull",Toast.LENGTH_SHORT).show();
+            //toast.makeText(context.getApplicationContext(),"Query sucessfull",Toast.LENGTH_SHORT).show();
             getNewArticlesDescription(result);
         }
         if(result.contains("Articletext")){
-            toast.makeText(context.getApplicationContext(),"Query articletext sucessfull",Toast.LENGTH_SHORT).show();
+            //toast.makeText(context.getApplicationContext(),"Query articletext sucessfull",Toast.LENGTH_SHORT).show();
             getNewArticlesText(result);
         }
         if(result.contains("Numbers")){
-            toast.makeText(context.getApplicationContext(),"Query sucessfull",Toast.LENGTH_SHORT).show();
+            //toast.makeText(context.getApplicationContext(),"Query sucessfull",Toast.LENGTH_SHORT).show();
             if (checkForNewArticlclesInDb(result)){
                 toast.makeText(context.getApplicationContext(),"New articles available",Toast.LENGTH_SHORT).show();
-            }else{
-                toast.makeText(context.getApplicationContext(),"No new articles available",Toast.LENGTH_SHORT).show();
             }
         }
         if(result.contains("OK")){
-            toast.makeText(context.getApplicationContext(),result.toString(),Toast.LENGTH_SHORT).show();
+            //toast.makeText(context.getApplicationContext(),result.toString(),Toast.LENGTH_SHORT).show();
             if(result.contains("Yes")){
                 Intent intent = new Intent (context.getApplicationContext(), ArticleScreen.class);
                 intent.putExtra(ArticleScreen.EXTRA_MESSAGE,result.toString());
@@ -336,7 +333,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
 
     /**
      * Creepy little function - it makes all the magic needed to parse the values correct
-     * Woölmice said DON'T touch it !
+     * Woolmice said DON'T touch it !
      * @param query the server message
      */
     private void getNewArticlesText(String query) {

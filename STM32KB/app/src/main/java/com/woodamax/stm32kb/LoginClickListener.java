@@ -12,6 +12,7 @@ public class LoginClickListener implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         //Toast.makeText(view.getContext(), "Clicked on login", Toast.LENGTH_SHORT).show();
+        MainActivity.fh.setAuthor(true);
         Intent intent = new Intent(view.getContext(), LoginScreenAsync.class);
         view.getContext().startActivity(intent);
     }

@@ -14,6 +14,7 @@ import static com.woodamax.stm32kb.DatabaseHelper.DATABASE_NAME;
 
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper myDBH;
+    static FragmentHelper fh = new FragmentHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

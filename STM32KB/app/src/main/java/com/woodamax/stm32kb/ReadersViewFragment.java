@@ -3,9 +3,11 @@ package com.woodamax.stm32kb;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -19,6 +21,16 @@ public class ReadersViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.article_readers_view_fragment,container,false);
         buildReadersView(view);
+
+        //Used to display the article button when the article is shown
+        Button articleButton = (Button) getActivity().findViewById(R.id.my_reading_article_button);
+        Button submitButton = (Button) getActivity().findViewById(R.id.my_reading_submit_button);
+        if(MainActivity.fh.getCenter().equals("Article_reading_fragment")){
+            articleButton.setVisibility(view.VISIBLE);
+            if(MainActivity.fh.isAuthor()){
+                submitButton.setVisibility(view.VISIBLE);
+            }
+        }
         return view;
     }
 

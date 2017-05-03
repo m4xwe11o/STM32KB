@@ -49,6 +49,8 @@
         Weiters wird ein Administrator den erstellten Artikel korrekturlesen und ggf. löschen falls die AGB verletzt werden.
         Die zur Verfügung gestellten Personen bezogenen Daten dienen ausschließlich der nachvollziehbarkeit eines erstellten Artikels.
         Wenn Sie den Button aktivieren akzeptieren sie die hier angeführten AGB!</string>
+    <string name="section_article">Article</string>
+    <string name="next_article">Next</string>
     <string-array name="micro_controllers">
         <item>Select Controller</item>
         <item>STM32F1</item>

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 //TODO calling a new Fragment for the Article Reading via the Article Selection Fragment
 /**
@@ -18,7 +19,6 @@ public class ArticleScreen extends AppCompatActivity {
     static ArticleHelper helper = new ArticleHelper();
     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
     android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +31,15 @@ public class ArticleScreen extends AppCompatActivity {
         BottomFragment bottom = new BottomFragment();
 
         ft.add(R.id.article_toolbar,toolbar,"Toolbar_fragment");
+        ft.add(R.id.article_text_container_bottom, bottom, "Bottom_Fragment");
         ft.add(R.id.article_text_container, article, "Article_selection_Fragment");
-        ft.add(R.id.article_text_container_bottom, bottom, "Bottom_Text");
         ft.commit();
         // add back arrow to toolbar
-
+        MainActivity.fh.setTop("Toolbar_fragment");
+        MainActivity.fh.setCenter("Article_selection_Fragment");
+        MainActivity.fh.setBottom("Bottom_Fragment");
     }
+
     // Menu icons are inflated just as they were with actionbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,6 +48,7 @@ public class ArticleScreen extends AppCompatActivity {
         //menu.findItem(R.id.reading_edit).setVisible(true);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //Used to find the Fragments
@@ -68,6 +72,7 @@ public class ArticleScreen extends AppCompatActivity {
                 if(cf2.isVisible()){
                     finish();
                 }
+                MainActivity.fh.setCenter("Article_selection_Fragment");
                 android.support.v4.app.FragmentManager fm3 = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction ft3 = fm3.beginTransaction();
                 ArticleSelectionFragment article = new ArticleSelectionFragment();

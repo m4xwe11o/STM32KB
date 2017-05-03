@@ -43,7 +43,7 @@ public class ToolbarFragment extends Fragment {
             activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        Toast.makeText(view.getContext(), messageText, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(view.getContext(), messageText, Toast.LENGTH_SHORT).show();
 
         return view;
     }
