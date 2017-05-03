@@ -9,6 +9,15 @@ public class FragmentHelper {
     String Center;
     String Bottom;
     boolean author;
+    int controllerType;
+
+    public int getControllerType() {
+        return controllerType;
+    }
+
+    public void setControllerType(int controllerType) {
+        this.controllerType = controllerType;
+    }
 
     public boolean isAuthor() {
         return author;

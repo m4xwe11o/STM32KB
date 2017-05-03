@@ -25,7 +25,6 @@ import org.w3c.dom.Text;
 
 public class ArticleSelectionFragment extends Fragment {
     DatabaseHelper myDBH;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,13 +37,16 @@ public class ArticleSelectionFragment extends Fragment {
             if(MainActivity.fh.isAuthor()){
                 submitButton.setVisibility(view.INVISIBLE);
             }
-        }
 
+        }
         //Toast.makeText(getContext(),MainActivity.fh.getCenter(), Toast.LENGTH_SHORT).show();
         //This uses an different design for the spinner
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.micro_controllers, R.layout.my_spinner_item);
         final Spinner microControllerSpinner = (Spinner) view.findViewById(R.id.article_micro_controller_spinner);
         microControllerSpinner.setAdapter(adapter);
+
+        //Preselect the article button on Readersview is pressed when article is pressed
+        preselectArticleCategory(microControllerSpinner);
         //Click Listener for the items inside the spinner
         int selectionCurrent = microControllerSpinner.getSelectedItemPosition();
         microControllerSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -71,6 +73,23 @@ public class ArticleSelectionFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void preselectArticleCategory(Spinner microControllerSpinner) {
+        switch (MainActivity.fh.getControllerType()){
+            case 1:
+                microControllerSpinner.setSelection(1);
+                break;
+            case 3:
+                microControllerSpinner.setSelection(2);
+                break;
+            case 4:
+                microControllerSpinner.setSelection(3);
+                break;
+            default:
+                microControllerSpinner.setSelection(0);
+                break;
+        }
     }
 
     //TODO dynamic view for the discription via DB query

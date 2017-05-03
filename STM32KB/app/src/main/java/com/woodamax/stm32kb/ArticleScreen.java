@@ -73,6 +73,7 @@ public class ArticleScreen extends AppCompatActivity {
                     finish();
                 }
                 MainActivity.fh.setCenter("Article_selection_Fragment");
+                MainActivity.fh.setControllerType(0);
                 android.support.v4.app.FragmentManager fm3 = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction ft3 = fm3.beginTransaction();
                 ArticleSelectionFragment article = new ArticleSelectionFragment();
