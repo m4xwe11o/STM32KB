@@ -32,6 +32,7 @@ public class ReadersViewFragment extends Fragment {
             articleButton.setVisibility(view.VISIBLE);
             if(MainActivity.fh.isAuthor()){
                 submitButton.setVisibility(view.VISIBLE);
+                submitButton.setClickable(false);
             }
         }
 
