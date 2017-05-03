@@ -28,7 +28,6 @@ public class ReadersViewFragment extends Fragment {
         //Used to display the article button when the article is shown
         Button articleButton = (Button) getActivity().findViewById(R.id.my_reading_article_button);
         Button submitButton = (Button) getActivity().findViewById(R.id.my_reading_submit_button);
-        final Spinner microcontrollerSpinner = (Spinner) getActivity().findViewById(R.id.article_micro_controller_spinner);
         if(MainActivity.fh.getCenter().equals("Article_reading_fragment")){
             articleButton.setVisibility(view.VISIBLE);
             if(MainActivity.fh.isAuthor()){
@@ -74,6 +73,11 @@ public class ReadersViewFragment extends Fragment {
         }
     }
 
+    /**
+     * This method is used to determine the controller category
+     * @param string passed from the Article object
+     * @return is equal to the switch/case in ArticleSelectionFragment
+     */
     private int getControllerType(String string) {
         if (string.contains("F1")){
             return 1;

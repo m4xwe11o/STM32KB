@@ -72,6 +72,7 @@ public class ArticleScreen extends AppCompatActivity {
                 if(cf2.isVisible()){
                     finish();
                 }
+                //Important to push the user experience
                 MainActivity.fh.setCenter("Article_selection_Fragment");
                 MainActivity.fh.setControllerType(0);
                 android.support.v4.app.FragmentManager fm3 = getSupportFragmentManager();
