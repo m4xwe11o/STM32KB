@@ -5,10 +5,10 @@ package com.woodamax.stm32kb;
  */
 
 public class FragmentHelper {
-    String Top;
-    String Center;
-    String Bottom;
-    boolean author;
+    String Top="";
+    String Center="";
+    String Bottom="";
+    boolean author=false;
     int controllerType;
 
     public int getControllerType() {

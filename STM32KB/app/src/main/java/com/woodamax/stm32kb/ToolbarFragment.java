@@ -61,6 +61,12 @@ public class ToolbarFragment extends Fragment {
         if(!(MainActivity.fh.isAuthor())){
             menu.findItem(R.id.reading_edit).setVisible(false);
         }else{
+            if(MainActivity.fh.Center.equals("Question")){
+                menu.findItem(R.id.reading_edit).setVisible(false);
+                menu.findItem(R.id.reading_edit).setVisible(false);
+                menu.findItem(R.id.reading_create).setVisible(false);
+                menu.findItem(R.id.reading_feedback).setVisible(false);
+            }
             menu.findItem(R.id.reading_edit).setVisible(true);
             menu.findItem(R.id.reading_create).setVisible(true);
             menu.findItem(R.id.reading_feedback).setVisible(false);

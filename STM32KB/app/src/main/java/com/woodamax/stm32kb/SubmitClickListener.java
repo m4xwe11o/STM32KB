@@ -1,6 +1,7 @@
 package com.woodamax.stm32kb;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -42,6 +43,8 @@ public class SubmitClickListener implements View.OnClickListener{
                     password.getText().toString(),
                     confirmpassword.getText().toString());
             toast.makeText(view.getContext(),"Registration is complete",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(view.getContext(),QuestionScreen.class);
+            view.getContext().startActivity(intent);
         }else{
             toast.makeText(view.getContext(),"Please fill in all fields!",Toast.LENGTH_SHORT).show();
         }

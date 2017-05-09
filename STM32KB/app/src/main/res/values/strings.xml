@@ -51,6 +51,7 @@
         Wenn Sie den Button aktivieren akzeptieren sie die hier angeführten AGB!</string>
     <string name="section_article">Article</string>
     <string name="next_article">Next</string>
+    <string name="lorum_small">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</string>
     <string-array name="micro_controllers">
         <item>Select Controller</item>
         <item>STM32F1</item>
