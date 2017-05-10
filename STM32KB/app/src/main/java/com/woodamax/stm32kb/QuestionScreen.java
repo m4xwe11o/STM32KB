@@ -19,11 +19,11 @@ public class QuestionScreen extends AppCompatActivity {
 
         ft.add(R.id.article_toolbar,toolbar,"Toolbar_fragment");
         ft.add(R.id.question_text_container_bottom, bottom, "Bottom_Fragment");
-        //ft.add(R.id.article_text_container, article, "Article_selection_Fragment");
+        ft.add(R.id.question_text_container, question, "Question_Fragment");
         ft.commit();
         // add back arrow to toolbar
         MainActivity.fh.setTop("Toolbar_fragment");
-        //MainActivity.fh.setCenter("Article_selection_Fragment");
+        MainActivity.fh.setCenter("Question_Fragment");
         MainActivity.fh.setBottom("Bottom_Fragment");
     }
 

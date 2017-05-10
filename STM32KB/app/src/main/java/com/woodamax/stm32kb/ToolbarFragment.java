@@ -57,16 +57,21 @@ public class ToolbarFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
         // Do something that differs the Activity's menu here
-        //Toast.makeText(getContext(), "On Create Options Menu", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Fragment On Create Options Menu", Toast.LENGTH_SHORT).show();
         if(!(MainActivity.fh.isAuthor())){
             menu.findItem(R.id.reading_edit).setVisible(false);
-        }else{
-            if(MainActivity.fh.Center.equals("Question")){
+            Toast.makeText(getContext(), "Is Not Author", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), MainActivity.fh.getCenter(), Toast.LENGTH_SHORT).show();
+            if(MainActivity.fh.getCenter().equals("Question_Fragment")){
+                Toast.makeText(getContext(), "Fragment QuestionFragment active", Toast.LENGTH_SHORT).show();
+                menu.findItem(R.id.reading_file).setVisible(false);
                 menu.findItem(R.id.reading_edit).setVisible(false);
                 menu.findItem(R.id.reading_edit).setVisible(false);
                 menu.findItem(R.id.reading_create).setVisible(false);
                 menu.findItem(R.id.reading_feedback).setVisible(false);
+                return;
             }
+        }else{
             menu.findItem(R.id.reading_edit).setVisible(true);
             menu.findItem(R.id.reading_create).setVisible(true);
             menu.findItem(R.id.reading_feedback).setVisible(false);

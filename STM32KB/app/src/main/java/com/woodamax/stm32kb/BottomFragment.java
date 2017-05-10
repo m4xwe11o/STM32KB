@@ -39,9 +39,10 @@ public class BottomFragment extends Fragment {
                 }
         );
         Button articleButton = (Button) view.findViewById(R.id.my_reading_article_button);
-        if(MainActivity.fh.getCenter().equals("Article_selection_Fragment")){
+        if(MainActivity.fh.getCenter().equals("Article_selection_Fragment") || MainActivity.fh.getCenter().equals("Question_Fragment")){
             articleButton.setVisibility(view.INVISIBLE);
         }
+
         return view;
     }
 }

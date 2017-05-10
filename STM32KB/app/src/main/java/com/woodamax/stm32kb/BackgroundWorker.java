@@ -358,7 +358,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
      */
     private void updateDatabase(String id,String text) {
         myDBH = new DatabaseHelper(context);
-        myDBH.updateDataText(id,text);
+        myDBH.updateArticleDataText(id,text);
     }
 
     /**
@@ -370,7 +370,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         myDBH = new DatabaseHelper(context);
         Cursor res = myDBH.getArticleDescription();
         if(res.getCount() == 0) {
-            myDBH.insertData(title,desc," "," ");
+            myDBH.insertArticleData(title,desc," "," ");
             return;
         }
 
@@ -380,7 +380,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
                 return;
             }
         }
-        myDBH.insertData(title,desc," "," ");
+        myDBH.insertArticleData(title,desc," "," ");
     }
 
     @Override

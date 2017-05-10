@@ -12,12 +12,43 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "stm32kb.db";
+
+    /**
+     * Article table
+     *
+     * ARTICLE TABLE
+     * ------------------------------------------------------------------
+     * |    ID  |   TITLE   |   DESCRIPTION |   PICTURE |   ARTICLETEXT |
+     * ------------------------------------------------------------------
+     */
     public static final String TABLE_ARTICLE = "article_table";
-    public static final String COL_1 = "ID";
-    public static final String COL_2 = "TITLE";
-    public static final String COL_3 = "DESCRIPTION";
-    public static final String COL_4 = "PICTURE";
-    public static final String COL_5 = "ARTICLETEXT";
+    public static final String ARTICLE_COL_1 = "ID";
+    public static final String ARTICLE_COL_2 = "TITLE";
+    public static final String ARTICLE_COL_3 = "DESCRIPTION";
+    public static final String ARTICLE_COL_4 = "PICTURE";
+    public static final String ARTICLE_COL_5 = "ARTICLETEXT";
+
+    /**
+     * Qestion,Answer, QuestionAnswer tables
+     *
+     * QUESTION TABLE               ANSWER TABLE            QUESTION/ANSWER TABLE
+     * --------------------------   ---------------------   -----------------------------------------
+     * |    ID  |   QUESTION    |   |   ID  |   ANSWER  |   |   ID  |   QUESTION_ID |   ANSWER_ID   |
+     * --------------------------   ---------------------   -----------------------------------------
+     */
+
+    public static final String TABLE_QUESTIONS = "question_table";
+    public static final String TABLE_ANSWER = "answer_table";
+    public static final String TABLE_QUESTION_ANSWER = "question_answer_table";
+
+    public static final String QUESTION_COL_1 = "ID";
+    public static final String ANSWER_COL_1 = "ID";
+    public static final String QUESTION_ANSWER_COL_1 = "ID";
+    public static final String QUESTION_COL_2 = "QUESTION";
+    public static final String ANSWER_COL_2 = "ANSWER";
+    public static final String QUESTION_ANSWER_COL_2 = "QUESTION_ID";
+    public static final String QUESTION_ANSWER_COL_3 = "ANSWER_ID";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -35,25 +66,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //This method writes into the DB
-    public boolean insertData(String title,String description, String picture, String articletext){
+    public boolean insertArticleData(String title, String description, String picture, String articletext){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2,title);
-        contentValues.put(COL_3,description);
-        contentValues.put(COL_4,picture);
-        contentValues.put(COL_5,articletext);
+        contentValues.put(ARTICLE_COL_2,title);
+        contentValues.put(ARTICLE_COL_3,description);
+        contentValues.put(ARTICLE_COL_4,picture);
+        contentValues.put(ARTICLE_COL_5,articletext);
         long result = db.insert(TABLE_ARTICLE,null,contentValues);
         if(result == -1){
             return false;
         }else{
             return true;
         }
-    }
-
-    public Cursor getAllData(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.rawQuery("select * from "+TABLE_ARTICLE,null);
-        return result;
     }
 
     public Cursor getArticleDescription(){
@@ -65,17 +90,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean updateDataTitle(String id, String title){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1,id);
-        contentValues.put(COL_2,title);
+        contentValues.put(ARTICLE_COL_1,id);
+        contentValues.put(ARTICLE_COL_2,title);
         db.update(TABLE_ARTICLE,contentValues,"ID = ?", new String[] {id});
         return true;
     }
 
-    public boolean updateDataText(String id, String text){
+    public boolean updateArticleDataText(String id, String text){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1,id);
-        contentValues.put(COL_5,text);
+        contentValues.put(ARTICLE_COL_1,id);
+        contentValues.put(ARTICLE_COL_5,text);
         db.update(TABLE_ARTICLE,contentValues,"ID = ?", new String[] {id});
         return true;
     }
