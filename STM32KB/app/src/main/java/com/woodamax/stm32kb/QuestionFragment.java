@@ -12,6 +12,7 @@ import android.view.ViewGroup;
  */
 
 public class QuestionFragment extends Fragment {
+    DatabaseHelper myDBH;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

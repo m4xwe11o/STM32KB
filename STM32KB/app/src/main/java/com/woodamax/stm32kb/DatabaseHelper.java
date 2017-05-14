@@ -57,6 +57,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table "+ TABLE_ARTICLE + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, DESCRIPTION TEXT, PICTURE TEXT, ARTICLETEXT TEXT)");
+        db.execSQL("create table "+ TABLE_QUESTIONS + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, QUESTION TEXT)");
+        db.execSQL("create table "+ TABLE_ANSWER + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, ANSWER TEXT)");
+        db.execSQL("create table "+ TABLE_QUESTION_ANSWER + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, QUESTION_ID INTEGER, ANSWER_ID INTEGER)");
     }
 
     @Override
@@ -110,9 +113,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.delete(TABLE_ARTICLE, "ID = ?",new String[] {id});
     }
 
-    public void dropTable(){
+    public void dropTableArticle(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_ARTICLE);
+    }
+
+    public void dropTableQuestions(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_ANSWER);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_QUESTIONS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_QUESTION_ANSWER);
     }
 
 }
