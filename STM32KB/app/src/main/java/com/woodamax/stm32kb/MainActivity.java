@@ -11,10 +11,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import static com.woodamax.stm32kb.DatabaseHelper.DATABASE_NAME;
-
+//TODO Add answers and linked table questions/answers
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper myDBH;
     static FragmentHelper fh = new FragmentHelper();
+    static BackgroundWorkerHelper bwh = new BackgroundWorkerHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +58,37 @@ public class MainActivity extends AppCompatActivity {
             fetchArticlesDescription();
             //Toast.makeText(MainActivity.this,"Fetching articles text",Toast.LENGTH_SHORT).show();
             fetchArticleText();
+            writeQuestionsInDb();
         }else{
             Toast.makeText(MainActivity.this,"Debuging database",Toast.LENGTH_SHORT).show();
-            debugDatabse();
+            //debugDatabse();
+            debugDatabse2();
         }
         return true;
     }
+
+    /**
+     * Used due to development
+     */
+    private void debugDatabse2() {
+        myDBH = new DatabaseHelper(this);
+        Cursor res = myDBH.getQuestions();
+        if(res.getCount() == 0) {
+            // show message
+            showMessage("Error","Nothing found");
+            return;
+        }
+
+        StringBuffer buffer = new StringBuffer();
+        while (res.moveToNext()) {
+            buffer.append("Id :"+ res.getString(0)+"\n");
+            buffer.append("Question :"+ res.getString(1)+"\n");
+        }
+
+        // Show all data
+        showMessage("Local Database",buffer.toString());
+    }
+
 
     /**
      * Method to display the local DB
@@ -130,5 +156,20 @@ public class MainActivity extends AppCompatActivity {
         String article = "article";
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
         backgroundworker.execute(type,article);
+    }
+
+    /**
+     * Used to write the questions to the DB
+     */
+    private void writeQuestionsInDb() {
+        String type = "writeQuestionsInDb";
+        bwh.setCount(4);
+        //Toast.makeText(this,R.string.Question1,Toast.LENGTH_SHORT).show();
+        BackgroundWorker backgroundworker = new BackgroundWorker(this);
+        backgroundworker.doInBackground(type,
+                getResources().getString(R.string.Question1),
+                getResources().getString(R.string.Question2),
+                getResources().getString(R.string.Question3),
+                getResources().getString(R.string.Question4));
     }
 }

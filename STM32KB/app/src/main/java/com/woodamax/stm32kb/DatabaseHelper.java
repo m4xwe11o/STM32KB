@@ -65,6 +65,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_ARTICLE);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_QUESTIONS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_ANSWER);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_QUESTION_ANSWER);
         onCreate(db);
     }
 
@@ -84,9 +87,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean insertQuestionData(String question){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(QUESTION_COL_2,question);
+        long result = db.insert(TABLE_QUESTIONS,null,contentValues);
+        if(result == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     public Cursor getArticleDescription(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor result = db.rawQuery("select * from "+TABLE_ARTICLE,null);
+        return result;
+    }
+
+    public Cursor getQuestions(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("select * from "+TABLE_QUESTIONS,null);
+        return result;
+    }
+
+    public Cursor getAnswers(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("select * from "+TABLE_ANSWER,null);
         return result;
     }
 
