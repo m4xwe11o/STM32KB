@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         StringBuffer buffer = new StringBuffer();
         while (res.moveToNext()) {
             buffer.append("Id :"+ res.getString(0)+"\n");
-            buffer.append("Question :"+ res.getString(1)+"\n");
+            buffer.append("Answer :"+ res.getString(1)+"\n");
         }
 
         // Show all data
