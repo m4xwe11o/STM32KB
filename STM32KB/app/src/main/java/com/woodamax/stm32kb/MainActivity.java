@@ -1,7 +1,10 @@
 package com.woodamax.stm32kb;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.database.Cursor;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +17,7 @@ import static com.woodamax.stm32kb.DatabaseHelper.DATABASE_NAME;
 //TODO Add answers and linked table questions/answers
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper myDBH;
+    ProgressDialog progressDoalog;
     static FragmentHelper fh = new FragmentHelper();
     static BackgroundWorkerHelper bwh = new BackgroundWorkerHelper();
 
@@ -52,17 +56,58 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_info){
-            //Better deleting the Database at the beginning... Than working on one of the creepy methods....
-            deleteDatabase(DATABASE_NAME);
-            //Toast.makeText(MainActivity.this,"Fetching articles description",Toast.LENGTH_SHORT).show();
-            fetchArticlesDescription();
-            //Toast.makeText(MainActivity.this,"Fetching articles text",Toast.LENGTH_SHORT).show();
-            fetchArticleText();
-            writeQuestionsInDb();
+            /**
+             * This block is used to display status information while all articles are loaded
+             */
+            progressDoalog = new ProgressDialog(MainActivity.this);
+            progressDoalog.setMax(100);
+            progressDoalog.setTitle("Updating database");
+            progressDoalog.setMessage("Please wait... it's loading...");
+            progressDoalog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDoalog.show();
+            new Thread(new Runnable() {
+                Handler handle = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        progressDoalog.incrementProgressBy(1);
+                    }
+                };
+                @Override
+                public void run() {
+                    try {
+                        while (progressDoalog.getProgress() <= progressDoalog
+                                .getMax()) {
+                            Thread.sleep(150);
+                            handle.sendMessage(handle.obtainMessage());
+                            if (progressDoalog.getProgress() == progressDoalog
+                                    .getMax()) {
+                                progressDoalog.dismiss();
+                            }
+                        }
+                        /**Better deleting the Database at the beginning... Than working on one of the creepy methods....
+                         * Than the articles are fetched, and the tables inside the database are filled
+                         */
+                        deleteDatabase(DATABASE_NAME);
+                        fetchArticlesDescription();
+                        fetchArticleText();
+                        writeQuestionsInDb();
+                        writeAnswersInDb();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+        }else if(item.getItemId() == R.id.menu_question){
+            Toast.makeText(MainActivity.this,"Debuging question database",Toast.LENGTH_SHORT).show();
+            debugQuestionDatabse();
+        }else if(item.getItemId() == R.id.menu_answer){
+            Toast.makeText(MainActivity.this,"Debuging answer database",Toast.LENGTH_SHORT).show();
+            debugAnswerDatabse();
         }else{
-            Toast.makeText(MainActivity.this,"Debuging database",Toast.LENGTH_SHORT).show();
-            //debugDatabse();
-            debugDatabse2();
+            Toast.makeText(MainActivity.this,"Debuging article database",Toast.LENGTH_SHORT).show();
+            debugDatabse();
         }
         return true;
     }
@@ -70,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Used due to development
      */
-    private void debugDatabse2() {
+    private void debugQuestionDatabse() {
         myDBH = new DatabaseHelper(this);
         Cursor res = myDBH.getQuestions();
         if(res.getCount() == 0) {
@@ -86,7 +131,26 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Show all data
-        showMessage("Local Database",buffer.toString());
+        showMessage("Question table",buffer.toString());
+    }
+
+    private void debugAnswerDatabse() {
+        myDBH = new DatabaseHelper(this);
+        Cursor res = myDBH.getAnswers();
+        if(res.getCount() == 0) {
+            // show message
+            showMessage("Error","Nothing found");
+            return;
+        }
+
+        StringBuffer buffer = new StringBuffer();
+        while (res.moveToNext()) {
+            buffer.append("Id :"+ res.getString(0)+"\n");
+            buffer.append("Question :"+ res.getString(1)+"\n");
+        }
+
+        // Show all data
+        showMessage("Answer table",buffer.toString());
     }
 
 
@@ -112,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Show all data
-        showMessage("Local Database",buffer.toString());
+        showMessage("Article table",buffer.toString());
     }
 
     /**
@@ -164,12 +228,37 @@ public class MainActivity extends AppCompatActivity {
     private void writeQuestionsInDb() {
         String type = "writeQuestionsInDb";
         bwh.setCount(4);
-        //Toast.makeText(this,R.string.Question1,Toast.LENGTH_SHORT).show();
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
         backgroundworker.doInBackground(type,
                 getResources().getString(R.string.Question1),
                 getResources().getString(R.string.Question2),
                 getResources().getString(R.string.Question3),
                 getResources().getString(R.string.Question4));
+    }
+
+    /**
+     * If it works... it isn't stupid...
+     */
+    private void writeAnswersInDb(){
+        String type = "writeAnswersInDb";
+        bwh.setCount(4*4);
+        BackgroundWorker backgroundworker = new BackgroundWorker(this);
+        backgroundworker.doInBackground(type,
+                getResources().getString(R.string.Answer1Q1),
+                getResources().getString(R.string.Answer1Q2),
+                getResources().getString(R.string.Answer1Q3),
+                getResources().getString(R.string.Answer1Q4),
+                getResources().getString(R.string.Answer2Q1),
+                getResources().getString(R.string.Answer2Q2),
+                getResources().getString(R.string.Answer2Q3),
+                getResources().getString(R.string.Answer2Q4),
+                getResources().getString(R.string.Answer3Q1),
+                getResources().getString(R.string.Answer3Q2),
+                getResources().getString(R.string.Answer3Q3),
+                getResources().getString(R.string.Answer3Q4),
+                getResources().getString(R.string.Answer4Q1),
+                getResources().getString(R.string.Answer4Q2),
+                getResources().getString(R.string.Answer4Q3),
+                getResources().getString(R.string.Answer4Q4));
     }
 }

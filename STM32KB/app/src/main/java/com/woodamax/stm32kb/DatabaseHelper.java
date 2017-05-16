@@ -99,6 +99,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean insertAnswerData(String answer){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ANSWER_COL_2,answer);
+        long result = db.insert(TABLE_ANSWER,null,contentValues);
+        if(result == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean insertCorrectAnswerData(String question,String answer){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(QUESTION_ANSWER_COL_2,question);
+        contentValues.put(QUESTION_ANSWER_COL_3,answer);
+        long result = db.insert(TABLE_QUESTION_ANSWER,null,contentValues);
+        if(result == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     public Cursor getArticleDescription(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor result = db.rawQuery("select * from "+TABLE_ARTICLE,null);
@@ -114,6 +139,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getAnswers(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor result = db.rawQuery("select * from "+TABLE_ANSWER,null);
+        return result;
+    }
+
+    public Cursor getRightAnswer(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("select * from "+TABLE_QUESTION_ANSWER,null);
         return result;
     }
 

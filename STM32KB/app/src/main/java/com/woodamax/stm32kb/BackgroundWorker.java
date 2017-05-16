@@ -240,9 +240,17 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
             myDBH = new DatabaseHelper(context);
             for(int i=1;i<=MainActivity.bwh.getCount();i++){
                 String question = params[i];
-                //Toast.makeText(context.getApplicationContext(),question,Toast.LENGTH_SHORT).show();
                 if(!(myDBH.insertQuestionData(question))){
                     Toast.makeText(context.getApplicationContext(),"Could not insert Question"+Integer.toString(i),Toast.LENGTH_SHORT).show();
+                    MainActivity.bwh.setError(1);
+                }
+            }
+        }else if(type.equals("writeAnswersInDb")) {
+            myDBH = new DatabaseHelper(context);
+            for(int i=1;i<=MainActivity.bwh.getCount();i++){
+                String answer = params[i];
+                if(!(myDBH.insertAnswerData(answer))){
+                    Toast.makeText(context.getApplicationContext(),"Could not insert Answer"+Integer.toString(i),Toast.LENGTH_SHORT).show();
                     MainActivity.bwh.setError(1);
                 }
             }
