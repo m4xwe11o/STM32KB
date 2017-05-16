@@ -3,7 +3,7 @@ package com.woodamax.stm32kb;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
-
+//TODO maybe use an ListAdapter to swipe from one question to the other...
 public class QuestionScreen extends AppCompatActivity {
 
     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();

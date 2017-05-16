@@ -2,7 +2,7 @@ package com.woodamax.stm32kb;
 
 /**
  * Created by maxim on 15.05.2017.
- * Needed for error handling and mabe other stuff
+ * Needed for error handling and maybe other stuff
  */
 
 public class BackgroundWorkerHelper {
