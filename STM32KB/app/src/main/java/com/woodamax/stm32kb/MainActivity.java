@@ -76,29 +76,30 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     try {
+                        deleteDatabase(DATABASE_NAME);
+                        fetchArticlesDescription();
+                        fetchArticleText();
+                        writeQuestionsInDb();
+                        writeAnswersInDb();
                         while (progressDoalog.getProgress() <= progressDoalog
                                 .getMax()) {
-                            Thread.sleep(150);
+                            Thread.sleep(250);
                             handle.sendMessage(handle.obtainMessage());
                             if (progressDoalog.getProgress() == progressDoalog
                                     .getMax()) {
                                 progressDoalog.dismiss();
                             }
                         }
+
                         /**Better deleting the Database at the beginning... Than working on one of the creepy methods....
                          * Than the articles are fetched, and the tables inside the database are filled
                          */
-                        deleteDatabase(DATABASE_NAME);
-                        fetchArticlesDescription();
-                        fetchArticleText();
-                        writeQuestionsInDb();
-                        writeAnswersInDb();
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }).start();
-
         }else if(item.getItemId() == R.id.menu_question){
             Toast.makeText(MainActivity.this,"Debuging question database",Toast.LENGTH_SHORT).show();
             debugQuestionDatabse();
