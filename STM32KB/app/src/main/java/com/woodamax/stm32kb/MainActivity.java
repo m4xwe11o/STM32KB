@@ -1,10 +1,9 @@
 package com.woodamax.stm32kb;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.database.Cursor;
-import android.os.Handler;
-import android.os.Message;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +16,7 @@ import static com.woodamax.stm32kb.DatabaseHelper.DATABASE_NAME;
 //TODO Add answers and linked table questions/answers
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper myDBH;
-    ProgressDialog progressDoalog;
+
     static FragmentHelper fh = new FragmentHelper();
     static BackgroundWorkerHelper bwh = new BackgroundWorkerHelper();
 
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(clickListener);
         register.setOnClickListener(clickListener1);
         reading.setOnClickListener(clickListener2);
-
+        bwh.setCode(1);
         checkForNewArticles();
     }
 
@@ -56,50 +55,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_info){
-            /**
-             * This block is used to display status information while all articles are loaded
-             */
-            progressDoalog = new ProgressDialog(MainActivity.this);
-            progressDoalog.setMax(100);
-            progressDoalog.setTitle("Updating database");
-            progressDoalog.setMessage("Please wait... it's loading...");
-            progressDoalog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDoalog.show();
-            new Thread(new Runnable() {
-                Handler handle = new Handler() {
-                    @Override
-                    public void handleMessage(Message msg) {
-                        super.handleMessage(msg);
-                        progressDoalog.incrementProgressBy(1);
-                    }
-                };
-                @Override
-                public void run() {
-                    try {
-                        deleteDatabase(DATABASE_NAME);
-                        fetchArticlesDescription();
-                        fetchArticleText();
-                        writeQuestionsInDb();
-                        writeAnswersInDb();
-                        while (progressDoalog.getProgress() <= progressDoalog
-                                .getMax()) {
-                            Thread.sleep(250);
-                            handle.sendMessage(handle.obtainMessage());
-                            if (progressDoalog.getProgress() == progressDoalog
-                                    .getMax()) {
-                                progressDoalog.dismiss();
-                            }
-                        }
-
-                        /**Better deleting the Database at the beginning... Than working on one of the creepy methods....
-                         * Than the articles are fetched, and the tables inside the database are filled
-                         */
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+            if(!(internetAvailable())){
+                Toast.makeText(MainActivity.this,"Check internet connectivity",Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            backgroundWorker.onPreExecute();
+            deleteDatabase(DATABASE_NAME);
+            fetchArticlesDescription();
+            fetchArticleText();
+            writeQuestionsInDb();
+            writeAnswersInDb();
         }else if(item.getItemId() == R.id.menu_question){
             Toast.makeText(MainActivity.this,"Debuging question database",Toast.LENGTH_SHORT).show();
             debugQuestionDatabse();
@@ -111,6 +77,14 @@ public class MainActivity extends AppCompatActivity {
             debugDatabse();
         }
         return true;
+    }
+
+    public boolean internetAvailable(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        //get info from active network
+        NetworkInfo networkinfo = connectivityManager.getActiveNetworkInfo();
+        //both have to be true to return true
+        return networkinfo != null && networkinfo.isConnectedOrConnecting();
     }
 
     /**

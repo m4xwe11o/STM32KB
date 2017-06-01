@@ -8,6 +8,7 @@ public class QuestionScreen extends AppCompatActivity {
 
     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
     android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

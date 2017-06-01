@@ -73,6 +73,7 @@ public class LoginScreenAsync extends AppCompatActivity {
 
     //Thies method creates a new instance of the BackgroundWorker to make an Async task which handles the DB connection
     public void sendToServer(final String username, final String password){
+        MainActivity.bwh.setCode(2);
         String type = "Login";
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
         backgroundworker.execute(type,username,password);
@@ -92,6 +93,7 @@ public class LoginScreenAsync extends AppCompatActivity {
         //both have to be true to return true
         return networkinfo != null && networkinfo.isConnectedOrConnecting();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

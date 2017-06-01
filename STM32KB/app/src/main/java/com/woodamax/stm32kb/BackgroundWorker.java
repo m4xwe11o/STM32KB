@@ -1,9 +1,12 @@
 package com.woodamax.stm32kb;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -32,6 +35,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         context = ctx;
     }
     DatabaseHelper myDBH;
+    ProgressDialog progressDialog;
 
     /**
      * The background works uses 5 different php scripts:
@@ -259,7 +263,49 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
     }
     @Override
     protected void onPreExecute() {
-        //toast.makeText(context.getApplicationContext(),"Login Status",Toast.LENGTH_SHORT).show();
+        if(MainActivity.bwh.getCode() == 1 || MainActivity.bwh.getCode() == 2){
+            MainActivity.bwh.setCode(0);
+            return;
+        }
+        /**
+         * This block is used to display status information while all articles are loaded
+         */
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMax(100);
+        progressDialog.setTitle("Updating database");
+        progressDialog.setMessage("Please wait... it's loading...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.show();
+        new Thread(new Runnable() {
+            Handler handle = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    progressDialog.incrementProgressBy(1);
+                }
+            };
+            @Override
+            public void run() {
+                try {
+                    while (progressDialog.getProgress() <= progressDialog
+                            .getMax()) {
+                        Thread.sleep(50);
+                        handle.sendMessage(handle.obtainMessage());
+                        if (progressDialog.getProgress() == progressDialog
+                                .getMax()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+
+                    /**Better deleting the Database at the beginning... Than working on one of the creepy methods....
+                     * Than the articles are fetched, and the tables inside the database are filled
+                     */
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     /**
@@ -339,7 +385,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
      */
     private void getNewArticlesDescription(String query) {
         query=query.replaceAll("]", "X\n");
-        toast.makeText(context.getApplicationContext(),query,Toast.LENGTH_SHORT).show();
+        //toast.makeText(context.getApplicationContext(),query,Toast.LENGTH_SHORT).show();
         Scanner scanner = new Scanner(query);
         while(scanner.hasNextLine()){
             String line = scanner.nextLine();
