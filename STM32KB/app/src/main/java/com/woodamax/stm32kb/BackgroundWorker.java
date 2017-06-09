@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -258,6 +259,39 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
                     MainActivity.bwh.setError(1);
                 }
             }
+        }else if(type.equals("writeQusteionAnswerInDb")) {
+            myDBH = new DatabaseHelper(context);
+            Cursor question = myDBH.getQuestions();
+
+            int q=0;
+            while (question.moveToNext()){
+                Cursor answer = myDBH.getAnswers();
+                int a= 0;
+                while(answer.moveToNext()){
+                    if(a==8 && q==0){
+                        myDBH.insertCorrectAnswerData(question.getInt(0),answer.getInt(0));
+                        Log.e("Question",question.getString(1));
+                        Log.e("Answer",answer.getString(1));
+                    }
+                    if(a==13 && q==1){
+                        myDBH.insertCorrectAnswerData(question.getInt(0),answer.getInt(0));
+                        Log.e("Question",question.getString(1));
+                        Log.e("Answer",answer.getString(1));
+                    }
+                    if(a==10 && q==2 ){
+                        myDBH.insertCorrectAnswerData(question.getInt(0),answer.getInt(0));
+                        Log.e("Question",question.getString(1));
+                        Log.e("Answer",answer.getString(1));
+                    }
+                    if((a==11||a==15) && q==3){
+                        myDBH.insertCorrectAnswerData(question.getInt(0),answer.getInt(0));
+                        Log.e("Question",question.getString(1));
+                        Log.e("Answer",answer.getString(1));
+                    }
+                    a++;
+                }
+                q++;
+            }
         }
         return null;
     }
@@ -270,6 +304,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         /**
          * This block is used to display status information while all articles are loaded
          */
+        Log.d("Backgroundtask","Preexecute Dialog");
         progressDialog = new ProgressDialog(context);
         progressDialog.setMax(100);
         progressDialog.setTitle("Updating database");

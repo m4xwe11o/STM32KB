@@ -111,7 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertCorrectAnswerData(String question,String answer){
+    public boolean insertCorrectAnswerData(int question,int answer){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(QUESTION_ANSWER_COL_2,question);

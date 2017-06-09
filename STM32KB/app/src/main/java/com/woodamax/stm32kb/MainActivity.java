@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             fetchArticleText();
             writeQuestionsInDb();
             writeAnswersInDb();
+            writeQusteionAnswerInDb();
         }else if(item.getItemId() == R.id.menu_question){
             Toast.makeText(MainActivity.this,"Debuging question database",Toast.LENGTH_SHORT).show();
             debugQuestionDatabse();
@@ -78,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
 
     public boolean internetAvailable(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
@@ -135,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
     private void debugDatabse() {
         myDBH = new DatabaseHelper(this);
         Cursor res = myDBH.getArticleDescription();
+        Cursor debug = myDBH.getRightAnswer();
         if(res.getCount() == 0) {
             // show message
             showMessage("Error","Nothing found");
@@ -148,6 +153,11 @@ public class MainActivity extends AppCompatActivity {
             buffer.append("Description :"+ res.getString(2)+"\n");
             buffer.append("Text :"+ res.getString(4)+"\n");
             //Toast.makeText(this,"DEBUG Message",Toast.LENGTH_SHORT).show();
+        }
+        while (debug.moveToNext()) {
+            Log.d("Id :",debug.getString(0));
+            Log.d("Question :",debug.getString(1));
+            Log.d("Answer :",debug.getString(2));
         }
 
         // Show all data
@@ -235,5 +245,12 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getString(R.string.Answer4Q2),
                 getResources().getString(R.string.Answer4Q3),
                 getResources().getString(R.string.Answer4Q4));
+    }
+
+    private void writeQusteionAnswerInDb() {
+        String type ="writeQusteionAnswerInDb";
+        bwh.setCount(4);
+        BackgroundWorker backgroundworker = new BackgroundWorker(this);
+        backgroundworker.doInBackground(type);
     }
 }
