@@ -1,5 +1,8 @@
 package com.woodamax.stm32kb;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by maxim on 14.05.2017.
  * Used to create the questions after the user is registered
@@ -7,12 +10,25 @@ package com.woodamax.stm32kb;
 
 public class Questions {
     int ID;
-    String question;
+    List<String> questions = new ArrayList<>();
+    List<String> answers = new ArrayList<>();
 
-    public Questions(int ID, String question) {
-        this.ID = ID;
-        this.question = question;
+    public List<String> getQuestion() {
+        return questions;
     }
+
+    public void setQuestion(List<String> question) {
+        this.questions = question;
+    }
+
+    public List<String> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<String> question) {
+        this.answers = question;
+    }
+
 
     public int getID() {
 
@@ -23,11 +39,5 @@ public class Questions {
         this.ID = ID;
     }
 
-    public String getQuestion() {
-        return question;
-    }
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
 }

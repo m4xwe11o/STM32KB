@@ -5,13 +5,13 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
-import android.widget.Toast;
-import android.widget.ToggleButton;
+
 //TODO implement the show password function like the LoginScreenAsync
 public class RegisterScreen extends AppCompatActivity {
 
@@ -85,7 +85,7 @@ public class RegisterScreen extends AppCompatActivity {
             finish(); // close this activity and return to preview activity (if there is any)
         }
         if (item.getItemId() == R.id.register_menu_info){
-            Toast.makeText(RegisterScreen.this,"Clicked on info",Toast.LENGTH_SHORT).show();
+            Log.e("Register Activity","Clicked on info");
         }
         return super.onOptionsItemSelected(item);
     }

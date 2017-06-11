@@ -1,19 +1,16 @@
 package com.woodamax.stm32kb;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 /**
  * Created by maxim on 05.04.2017.
@@ -39,31 +36,34 @@ public class ToolbarFragment extends Fragment {
         activity.setSupportActionBar(toolbar);
 
         // add back arrow to toolbar
-        if (activity.getSupportActionBar() != null){
-            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if(!(MainActivity.fh.getCenter().equals("Question_Fragment"))){
+            Log.d("Toolbar Fragment","Displaying the back arrow");
+            if (activity.getSupportActionBar() != null){
+                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+            }
         }
-        //Toast.makeText(view.getContext(), messageText, Toast.LENGTH_SHORT).show();
-
+        if(MainActivity.fh.getCenter().equals("Question_Fragment")){
+            toolbar.setTitle("Finishing registration");
+        }
         return view;
     }
 
     @Override
     public void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Toast.makeText(getContext(), "On Create", Toast.LENGTH_SHORT).show();
         setHasOptionsMenu(true);
     }
     @Override
     public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
         // Do something that differs the Activity's menu here
-        Toast.makeText(getContext(), "Fragment On Create Options Menu", Toast.LENGTH_SHORT).show();
+        Log.d("Toolbar Fragment","Fragment On Create Options Menu");
         if(!(MainActivity.fh.isAuthor())){
             menu.findItem(R.id.reading_edit).setVisible(false);
-            Toast.makeText(getContext(), "Is Not Author", Toast.LENGTH_SHORT).show();
-            Toast.makeText(getContext(), MainActivity.fh.getCenter(), Toast.LENGTH_SHORT).show();
+            Log.d("Toolbar Fragment","Is Not Author");
+            Log.d("Toolbar Fragment", MainActivity.fh.getCenter());
             if(MainActivity.fh.getCenter().equals("Question_Fragment")){
-                Toast.makeText(getContext(), "Fragment QuestionFragment active", Toast.LENGTH_SHORT).show();
+                Log.d("Toolbar Fragment","Fragment QuestionFragment1 active");
                 menu.findItem(R.id.reading_file).setVisible(false);
                 menu.findItem(R.id.reading_edit).setVisible(false);
                 menu.findItem(R.id.reading_edit).setVisible(false);

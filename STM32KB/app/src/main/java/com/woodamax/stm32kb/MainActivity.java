@@ -18,6 +18,7 @@ import static com.woodamax.stm32kb.DatabaseHelper.DATABASE_NAME;
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper myDBH;
 
+    static Questions qh = new Questions();
     static FragmentHelper fh = new FragmentHelper();
     static BackgroundWorkerHelper bwh = new BackgroundWorkerHelper();
 
@@ -43,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         reading.setOnClickListener(clickListener2);
         bwh.setCode(1);
         checkForNewArticles();
+        writeQuestionsInDb();
+        writeAnswersInDb();
+        writeQuestionAnswerInDb();
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -63,19 +67,20 @@ public class MainActivity extends AppCompatActivity {
             BackgroundWorker backgroundWorker = new BackgroundWorker(this);
             backgroundWorker.onPreExecute();
             deleteDatabase(DATABASE_NAME);
+            bwh.setCode(1);
             fetchArticlesDescription();
+            bwh.setCode(1);
             fetchArticleText();
-            writeQuestionsInDb();
-            writeAnswersInDb();
-            writeQusteionAnswerInDb();
+
+
         }else if(item.getItemId() == R.id.menu_question){
-            Toast.makeText(MainActivity.this,"Debuging question database",Toast.LENGTH_SHORT).show();
+            Log.d("Main Activity", "Debuging question database");
             debugQuestionDatabse();
         }else if(item.getItemId() == R.id.menu_answer){
-            Toast.makeText(MainActivity.this,"Debuging answer database",Toast.LENGTH_SHORT).show();
+            Log.d("Main Activity", "Debuging answer database");
             debugAnswerDatabse();
         }else{
-            Toast.makeText(MainActivity.this,"Debuging article database",Toast.LENGTH_SHORT).show();
+            Log.d("Main Activity", "Debuging article database");
             debugDatabse();
         }
         return true;
@@ -85,9 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean internetAvailable(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        //get info from active network
         NetworkInfo networkinfo = connectivityManager.getActiveNetworkInfo();
-        //both have to be true to return true
         return networkinfo != null && networkinfo.isConnectedOrConnecting();
     }
 
@@ -98,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         myDBH = new DatabaseHelper(this);
         Cursor res = myDBH.getQuestions();
         if(res.getCount() == 0) {
-            // show message
             showMessage("Error","Nothing found");
             return;
         }
@@ -109,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
             buffer.append("Question :"+ res.getString(1)+"\n");
         }
 
-        // Show all data
         showMessage("Question table",buffer.toString());
     }
 
@@ -117,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         myDBH = new DatabaseHelper(this);
         Cursor res = myDBH.getAnswers();
         if(res.getCount() == 0) {
-            // show message
             showMessage("Error","Nothing found");
             return;
         }
@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
             buffer.append("Answer :"+ res.getString(1)+"\n");
         }
 
-        // Show all data
         showMessage("Answer table",buffer.toString());
     }
 
@@ -141,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         Cursor res = myDBH.getArticleDescription();
         Cursor debug = myDBH.getRightAnswer();
         if(res.getCount() == 0) {
-            // show message
             showMessage("Error","Nothing found");
             return;
         }
@@ -152,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
             buffer.append("Title :"+ res.getString(1)+"\n");
             buffer.append("Description :"+ res.getString(2)+"\n");
             buffer.append("Text :"+ res.getString(4)+"\n");
-            //Toast.makeText(this,"DEBUG Message",Toast.LENGTH_SHORT).show();
         }
         while (debug.moveToNext()) {
             Log.d("Id :",debug.getString(0));
@@ -160,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Answer :",debug.getString(2));
         }
 
-        // Show all data
         showMessage("Article table",buffer.toString());
     }
 
@@ -247,8 +243,8 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getString(R.string.Answer4Q4));
     }
 
-    private void writeQusteionAnswerInDb() {
-        String type ="writeQusteionAnswerInDb";
+    private void writeQuestionAnswerInDb() {
+        String type ="writeQuestionAnswerInDb";
         bwh.setCount(4);
         BackgroundWorker backgroundworker = new BackgroundWorker(this);
         backgroundworker.doInBackground(type);

@@ -245,8 +245,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
             myDBH = new DatabaseHelper(context);
             for(int i=1;i<=MainActivity.bwh.getCount();i++){
                 String question = params[i];
+                MainActivity.qh.questions.add(question);
+                Log.d("BW",MainActivity.qh.questions.get(i-1));
                 if(!(myDBH.insertQuestionData(question))){
-                    Toast.makeText(context.getApplicationContext(),"Could not insert Question"+Integer.toString(i),Toast.LENGTH_SHORT).show();
+                    Log.e("Backgroundworker","Could not insert Question");
                     MainActivity.bwh.setError(1);
                 }
             }
@@ -254,8 +256,10 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
             myDBH = new DatabaseHelper(context);
             for(int i=1;i<=MainActivity.bwh.getCount();i++){
                 String answer = params[i];
+                MainActivity.qh.answers.add(answer);
+                Log.d("BW",MainActivity.qh.answers.get(i-1));
                 if(!(myDBH.insertAnswerData(answer))){
-                    Toast.makeText(context.getApplicationContext(),"Could not insert Answer"+Integer.toString(i),Toast.LENGTH_SHORT).show();
+                    Log.e("Backgroundworker","Could not insert Answer");
                     MainActivity.bwh.setError(1);
                 }
             }
@@ -306,17 +310,18 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
          */
         Log.d("Backgroundtask","Preexecute Dialog");
         progressDialog = new ProgressDialog(context);
-        progressDialog.setMax(100);
+
         progressDialog.setTitle("Updating database");
         progressDialog.setMessage("Please wait... it's loading...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setProgress(10);
         progressDialog.show();
         new Thread(new Runnable() {
             Handler handle = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
-                    progressDialog.incrementProgressBy(1);
+                    progressDialog.incrementProgressBy(15);
                 }
             };
             @Override
@@ -324,7 +329,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
                 try {
                     while (progressDialog.getProgress() <= progressDialog
                             .getMax()) {
-                        Thread.sleep(50);
+                        Thread.sleep(150);
                         handle.sendMessage(handle.obtainMessage());
                         if (progressDialog.getProgress() == progressDialog
                                 .getMax()) {
@@ -365,24 +370,20 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         if (result == null){result = "None";}
 
         if(result.toString() == ""){
-            toast.makeText(context.getApplicationContext(),"DB query not sucessfull",Toast.LENGTH_SHORT).show();
+            Log.e("Backgroundworker PE","DB query not sucessfull");
         }
         if(result.contains("Query")){
-            //toast.makeText(context.getApplicationContext(),"Query sucessfull",Toast.LENGTH_SHORT).show();
             getNewArticlesDescription(result);
         }
         if(result.contains("Articletext")){
-            //toast.makeText(context.getApplicationContext(),"Query articletext sucessfull",Toast.LENGTH_SHORT).show();
             getNewArticlesText(result);
         }
         if(result.contains("Numbers")){
-            //toast.makeText(context.getApplicationContext(),"Query sucessfull",Toast.LENGTH_SHORT).show();
             if (checkForNewArticlclesInDb(result)){
                 toast.makeText(context.getApplicationContext(),"New articles available",Toast.LENGTH_SHORT).show();
             }
         }
         if(result.contains("OK")){
-            //toast.makeText(context.getApplicationContext(),result.toString(),Toast.LENGTH_SHORT).show();
             if(result.contains("Yes")){
                 Intent intent = new Intent (context.getApplicationContext(), ArticleScreen.class);
                 intent.putExtra(ArticleScreen.EXTRA_MESSAGE,result.toString());
@@ -391,7 +392,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
                 toast.makeText(context.getApplicationContext(),"Not allowed to login",Toast.LENGTH_SHORT).show();
             }
         }else if (result.contains("Insert")){
-            //toast.makeText(context.getApplicationContext(),result.toString(),Toast.LENGTH_SHORT).show();
         }
     }
 

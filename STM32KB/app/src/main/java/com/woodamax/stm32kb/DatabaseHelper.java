@@ -182,5 +182,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_QUESTIONS);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_QUESTION_ANSWER);
     }
-
+    @Override
+    protected void finalize() throws Throwable {
+        this.close();
+        super.finalize();
+    }
 }

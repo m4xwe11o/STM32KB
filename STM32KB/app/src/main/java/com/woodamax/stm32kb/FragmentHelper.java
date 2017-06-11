@@ -8,6 +8,8 @@ public class FragmentHelper {
     String Top="";
     String Center="";
     String Bottom="";
+
+    int questionnumber;
     boolean author=false;
     int controllerType;
 
@@ -50,4 +52,8 @@ public class FragmentHelper {
     public void setBottom(String bottom) {
         Bottom = bottom;
     }
+
+    public int getQuestionnumber() {return questionnumber;    }
+
+    public void setQuestionnumber(int questionnumber) {this.questionnumber = questionnumber;    }
 }
