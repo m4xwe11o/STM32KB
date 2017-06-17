@@ -166,7 +166,7 @@ public class ArticleSelectionFragment extends Fragment {
         FragmentTransaction ft2 = fm2.beginTransaction();
         while(res.moveToNext()){
             if(v.getId() == Integer.parseInt(res.getString(0))){
-                MainActivity.fh.setCenter("Article_reading_fragment");
+                MainActivity.fh.setCenter("Article_reading_Fragment");
                 //Toast.makeText(getContext(),res.getString(1), Toast.LENGTH_SHORT).show();
                 //This objects helps to know which article was clicked
                 ArticleScreen.helper.setId(Integer.parseInt(res.getString(0)));
@@ -174,7 +174,7 @@ public class ArticleSelectionFragment extends Fragment {
                 ReadersViewFragment readersview = new ReadersViewFragment();
                 ft2.addToBackStack(null);
                 ft2.hide(ArticleSelectionFragment.this);
-                ft2.add(R.id.article_text_container,readersview,"Article_reading_fragment");
+                ft2.add(R.id.article_text_container,readersview,"Article_reading_Fragment");
                 ft2.commit();
             }
         }

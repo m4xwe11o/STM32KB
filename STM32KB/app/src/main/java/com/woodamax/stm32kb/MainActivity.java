@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseHelper myDBH;
 
     static Questions qh = new Questions();
+    static Article ah = new Article("","","","");
     static FragmentHelper fh = new FragmentHelper();
     static BackgroundWorkerHelper bwh = new BackgroundWorkerHelper();
 
