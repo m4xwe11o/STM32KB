@@ -28,7 +28,7 @@ public class BottomFragment extends Fragment {
         View view=inflater.inflate(R.layout.article_bottom_fragment, container, false);
         Intent intent = getActivity().getIntent();
         //messageText = intent.getStringExtra(EXTRA_MESSAGE);
-        back = (Button) view.findViewById(R.id.my_reading_back_button);
+        /**back = (Button) view.findViewById(R.id.my_reading_back_button);
         back.setOnClickListener(
                 new View.OnClickListener(){
                     @Override
@@ -37,7 +37,7 @@ public class BottomFragment extends Fragment {
                         getActivity().startActivity(intent);
                     }
                 }
-        );
+        );*/
         Button articleButton = (Button) view.findViewById(R.id.my_reading_article_button);
         if(MainActivity.fh.getCenter().equals("Article_selection_Fragment") || MainActivity.fh.getCenter().equals("Question_Fragment")){
             articleButton.setVisibility(view.INVISIBLE);

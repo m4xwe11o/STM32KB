@@ -1,5 +1,7 @@
 package com.woodamax.stm32kb;
 
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +9,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+
 //TODO maybe use an ListAdapter to swipe from one question to the other...
 public class QuestionScreen extends AppCompatActivity {
 
@@ -19,7 +24,8 @@ public class QuestionScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_screen);
-
+        final Button submit = (Button) findViewById(R.id.question_submit_button);
+        final Button finish = (Button) findViewById(R.id.question_finish_button);
         MainActivity.bwh.setCode(1);
         writeQuestionsInDb();
         MainActivity.bwh.setCode(1);
@@ -34,11 +40,11 @@ public class QuestionScreen extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Q4"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        ToolbarFragment toolbar = new ToolbarFragment();
-        BottomFragment bottom = new BottomFragment();
+        final ToolbarFragment toolbar = new ToolbarFragment();
+        //BottomFragment bottom = new BottomFragment();
 
         ft.add(R.id.article_toolbar,toolbar,"Toolbar_fragment");
-        ft.add(R.id.question_text_container_bottom, bottom, "Bottom_Fragment");
+        //ft.add(R.id.question_text_container_bottom, bottom, "Bottom_Fragment");
         //ft.add(R.id.question_text_container, question, "Question_Fragment");
         ft.commit();
         // add back arrow to toolbar
@@ -55,8 +61,52 @@ public class QuestionScreen extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                if(tab.getPosition() == 4){
-                    Log.e("QA","Tab 4");
+                switch (tab.getPosition()){
+                    case 0:
+                        Log.e("QA","Tab 1");
+                        submit.setVisibility(View.INVISIBLE);
+                        break;
+                    case 1:
+                        Log.e("QA","Tab 2");
+                        submit.setVisibility(View.INVISIBLE);
+                        break;
+                    case 2:
+                        Log.e("QA","Tab 3");
+                        submit.setVisibility(View.INVISIBLE);
+                        break;
+                    case 3:
+                        Log.e("QA","Tab 4");
+                        submit.setVisibility(View.VISIBLE);
+                        submit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String messageText = buildMessage();
+                                Log.e("QA","Clicked on Submit");
+                                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                                emailIntent.setType("message/rfc822");
+                                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "maximilian.pessl@stud.fh-campuswien.ac.at", "erika.wood@stud.fh-campuswien.ac.at" });
+                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Registration for STM32KB");
+                                emailIntent.putExtra(Intent.EXTRA_TEXT, MainActivity.qh.getQuestion().get(0));
+                                emailIntent.putExtra(Intent.EXTRA_TEXT, messageText);
+                                v.getContext().startActivity(emailIntent);
+                                submit.setVisibility(View.INVISIBLE);
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    public void run() {
+                                        finish.setVisibility(View.VISIBLE);
+                                        finish.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(v.getContext(),MainActivity.class);
+                                                v.getContext().startActivity(intent);
+                                            }
+                                        });
+                                    }
+                                }, 5000);
+
+                            }
+                        });
+                        break;
                 }
             }
 
@@ -70,6 +120,88 @@ public class QuestionScreen extends AppCompatActivity {
 
             }
         });
+    }
+
+    private String buildMessage() {
+        StringBuilder newMessage = new StringBuilder();
+        newMessage.append("\n"+"Resgistration answers:");
+        newMessage.append("\n\nQuestion: "+MainActivity.qh.getQuestion().get(0));
+        if(MainActivity.qh.isQ1a1()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(0));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(0));
+        }
+        if(MainActivity.qh.isQ1a2()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(4));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(4));
+        }
+        if(MainActivity.qh.isQ1a3()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(8));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(8));
+        }
+        if(MainActivity.qh.isQ1a4()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(12));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(12));
+        }
+
+        newMessage.append("\n\nQuestion: "+MainActivity.qh.getQuestion().get(1));
+
+        if(MainActivity.qh.isQ2a1()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(1));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(1));
+        }
+        if(MainActivity.qh.isQ2a2()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(5));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(5));
+        }
+        if(MainActivity.qh.isQ2a3()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(9));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(9));
+        }
+        if(MainActivity.qh.isQ2a4()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(13));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(13));
+        }
+
+        newMessage.append("\n\nQuestion: "+MainActivity.qh.getQuestion().get(2));
+
+        if(MainActivity.qh.isQ3a1()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(2));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(2));
+        }
+        if(MainActivity.qh.isQ3a2()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(6));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(6));
+        }
+        if(MainActivity.qh.isQ3a3()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(10));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(10));
+        }
+        if(MainActivity.qh.isQ3a4()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(14));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(14));
+        }
+
+        newMessage.append("\n\nQuestion: "+MainActivity.qh.getQuestion().get(3));
+
+        if(MainActivity.qh.isQ2a1()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(3));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(3));
+        }
+        if(MainActivity.qh.isQ2a2()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(7));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(7));
+        }
+        if(MainActivity.qh.isQ2a3()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(11));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(11));
+        }
+        if(MainActivity.qh.isQ2a4()){
+            Log.e("QA",MainActivity.qh.getAnswers().get(15));
+            newMessage.append("\nAnswer: "+MainActivity.qh.getAnswers().get(15));
+        }
+
+        String message = newMessage.toString();
+        return message;
     }
 
     @Override
