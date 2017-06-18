@@ -15,6 +15,12 @@ public class ArticleCreateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.article_create_article_fragments, container, false);
+        MainActivity.fh.setCenter("Article_create_Fragment");
+        EditText title = (EditText) view.findViewById(R.id.article_readers_create_title);
+        EditText description = (EditText) view.findViewById(R.id.article_readers_create_description);
+        EditText articletext = (EditText) view.findViewById(R.id.article_readers_create_text);
+
+        title.setText(MainActivity.ah.getTitle().substring(0,7)+" - ");
         return view;
     }
 }

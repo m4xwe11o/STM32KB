@@ -17,6 +17,7 @@ public class ArticleEditFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.article_edit_article_fragment, container, false);
+        MainActivity.fh.setCenter("Article_edit_Fragment");
         EditText title = (EditText) view.findViewById(R.id.article_readers_edit_title);
         EditText description = (EditText) view.findViewById(R.id.article_readers_edit_description);
         EditText articletext = (EditText) view.findViewById(R.id.article_readers_edit_text);

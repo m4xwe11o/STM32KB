@@ -1,11 +1,14 @@
 package com.woodamax.stm32kb;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 //TODO calling a new Fragment for the Article Reading via the Article Selection Fragment
 /**
@@ -51,11 +54,22 @@ public class ArticleScreen extends AppCompatActivity {
         //Used to find the Fragments
         Fragment cf = fm.findFragmentByTag("Article_reading_Fragment");
         Fragment cf2 = fm.findFragmentByTag("Article_selection_Fragment");
+        Button submitButton = (Button) this.findViewById(R.id.my_reading_submit_button);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("AS", "Clicked on submit");
+            }
+        });
+        if(submitButton == null){
+            Log.e("AS", "Error");
+        }
         if (item.getItemId() == R.id.reading_feedback) {
             Toast.makeText(getApplicationContext(), "FEEDBACK", Toast.LENGTH_SHORT).show();
         }
         if (item.getItemId() == R.id.reading_file) {
-            if(MainActivity.fh.getCenter().equals("Article_reading_Fragment")){
+            if(MainActivity.fh.getCenter().equals("Article_reading_Fragment")|| MainActivity.fh.getCenter().equals("Article_create_Fragment") || MainActivity.fh.getCenter().equals("Article_edit_Fragment")){
+                Log.d("AS",MainActivity.fh.getCenter());
                 Log.e("AS","Change to SF");
                 MainActivity.fh.setCenter("Article_reading_Fragment");
                 android.support.v4.app.FragmentManager fm6 = getSupportFragmentManager();
@@ -65,10 +79,12 @@ public class ArticleScreen extends AppCompatActivity {
                 ft6.hide(cf);
                 ft6.add(R.id.article_text_container,readarticle,"Article_reading_Fragment");
                 ft6.commit();
+                submitButton.setTextColor(Color.GRAY);
             }Log.e("AS",MainActivity.fh.getCenter());
         }
         if (item.getItemId() == R.id.reading_edit) {
             if(MainActivity.fh.getCenter().equals("Article_reading_Fragment")){
+                Log.d("AS",MainActivity.fh.getCenter());
                 Log.e("AS","Change to EF");
                 MainActivity.fh.setCenter("Article_reading_Fragment");
                 android.support.v4.app.FragmentManager fm4 = getSupportFragmentManager();
@@ -78,10 +94,13 @@ public class ArticleScreen extends AppCompatActivity {
                 ft4.hide(cf);
                 ft4.add(R.id.article_text_container,editarticle,"Article_reading_Fragment");
                 ft4.commit();
+                submitButton.setVisibility(View.VISIBLE);
+                submitButton.setTextColor(Color.BLACK);
             }Log.e("AS",MainActivity.fh.getCenter());
         }
         if (item.getItemId() == R.id.reading_create) {
             if(MainActivity.fh.getCenter().equals("Article_reading_Fragment")){
+                Log.d("AS",MainActivity.fh.getCenter());
                 Log.e("AS","Change to CF");
                 MainActivity.fh.setCenter("Article_reading_Fragment");
                 android.support.v4.app.FragmentManager fm5 = getSupportFragmentManager();
@@ -91,6 +110,8 @@ public class ArticleScreen extends AppCompatActivity {
                 ft5.hide(cf);
                 ft5.add(R.id.article_text_container,createarticle,"Article_reading_Fragment");
                 ft5.commit();
+                submitButton.setVisibility(View.VISIBLE);
+                submitButton.setTextColor(Color.BLACK);
             }Log.e("AS",MainActivity.fh.getCenter());
         }
         if (item.getItemId() == android.R.id.home) {
