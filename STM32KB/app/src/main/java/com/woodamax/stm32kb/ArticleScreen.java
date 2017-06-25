@@ -1,5 +1,6 @@
 package com.woodamax.stm32kb;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 //TODO calling a new Fragment for the Article Reading via the Article Selection Fragment
 /**
@@ -17,6 +19,8 @@ import android.widget.Toast;
 public class ArticleScreen extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "message";
     static ArticleHelper helper = new ArticleHelper();
+    DatabaseHelper myDBH;
+    Context context;
     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
     android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
 
@@ -54,11 +58,46 @@ public class ArticleScreen extends AppCompatActivity {
         //Used to find the Fragments
         Fragment cf = fm.findFragmentByTag("Article_reading_Fragment");
         Fragment cf2 = fm.findFragmentByTag("Article_selection_Fragment");
-        Button submitButton = (Button) this.findViewById(R.id.my_reading_submit_button);
+        final Button submitButton = (Button) this.findViewById(R.id.my_reading_submit_button);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Fragment cf = fm.findFragmentByTag("Article_reading_Fragment");
                 Log.d("AS", "Clicked on submit");
+                View parent = v.getRootView();
+                if(MainActivity.fh.getCenter()== "Article_edit_Fragment"){
+                    EditText title = (EditText) parent.findViewById(R.id.article_readers_edit_title);
+                    EditText description = (EditText) parent.findViewById(R.id.article_readers_edit_description);
+                    EditText articletext = (EditText) parent.findViewById(R.id.article_readers_edit_text);
+                    if(updateArtilceInDb(title, description, articletext)){
+                        Log.d("EA","Updated article");
+                    }else{
+                        Log.e("EA","ERROR updated article");
+                    }
+                }else{
+                    EditText title = (EditText) parent.findViewById(R.id.article_readers_create_title);
+                    EditText description = (EditText) parent.findViewById(R.id.article_readers_create_description);
+                    EditText articletext = (EditText) parent.findViewById(R.id.article_readers_create_text);
+                    if(writeArtilceToDb(title, description, articletext)){
+                        String type = "NewArticle";
+                        BackgroundWorker backgroundWorker = new BackgroundWorker(parent.getContext());
+                        backgroundWorker.onPreExecute();
+                        backgroundWorker.doInBackground(type, title.getText().toString(), description.getText().toString(), articletext.getText().toString());
+                        Log.d("EA","Aricle written to DB");
+                    }else{
+                        Log.e("EA","ERROR writing article to DB");
+                    }
+                }
+                Log.d("AS",MainActivity.fh.getCenter());
+                Log.e("AS","Change to RF");
+                MainActivity.fh.setCenter("Article_reading_Fragment");
+                android.support.v4.app.FragmentManager fm7 = getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction ft7 = fm7.beginTransaction();
+                ReadersViewFragment readarticle = new ReadersViewFragment();
+                ft7.addToBackStack(null);
+                ft7.hide(cf);
+                ft7.add(R.id.article_text_container,readarticle,"Article_reading_Fragment");
+                ft7.commit();
             }
         });
         if(submitButton == null){
@@ -135,5 +174,18 @@ public class ArticleScreen extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean writeArtilceToDb(EditText title, EditText description, EditText articletext) {
+        myDBH = new DatabaseHelper(this);
+        if(myDBH.insertArticleData(title.getText().toString(),description.getText().toString()," ",articletext.getText().toString())){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean updateArtilceInDb(EditText title, EditText description, EditText articletext) {
+        myDBH = new DatabaseHelper(this);
+        return false;
     }
 }

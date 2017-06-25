@@ -55,6 +55,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
         String fetch_article_url = "http://m4xwe11o.ddns.net/MAD-Test/fetch_article.php";
         String fetch_articletext_url = "http://m4xwe11o.ddns.net/MAD-Test/fetch_articletext.php";
         String fetch_new_artcie_url = "http://m4xwe11o.ddns.net/MAD-Test/fetch_new_article.php";
+        String send_article_url = "http://m4xwe11o.ddns.net/MAD-Test/new_article.php";
 
         if(type.equals("Login")){
             try{
@@ -295,6 +296,45 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
                     a++;
                 }
                 q++;
+            }
+        }else if(type.equals("NewArticle")){
+            try {
+                String title = params[1];
+                String description = params[2];
+                String text = params[3];
+                URL url = new URL(send_article_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("surname", "UTF-8") + "=" + URLEncoder.encode(title, "UTF-8") + "&"
+                        + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8") + "&"
+                        + URLEncoder.encode("confpassword", "UTF-8") + "=" + URLEncoder.encode(text, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return null;

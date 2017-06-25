@@ -30,6 +30,7 @@ public class QuestionScreen extends AppCompatActivity {
         writeAnswersInDb();
         MainActivity.bwh.setCode(1);
         writeQuestionAnswerInDb();
+        MainActivity.fh.setCenter("Question_Fragment");
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Q1"));
