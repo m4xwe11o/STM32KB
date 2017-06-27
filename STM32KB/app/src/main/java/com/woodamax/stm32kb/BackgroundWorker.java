@@ -309,7 +309,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("tile", "UTF-8") + "=" + URLEncoder.encode(title, "UTF-8") + "&"
+                String post_data = URLEncoder.encode("title", "UTF-8") + "=" + URLEncoder.encode(title, "UTF-8") + "&"
                         + URLEncoder.encode("description", "UTF-8") + "=" + URLEncoder.encode(description, "UTF-8") + "&"
                         + URLEncoder.encode("text", "UTF-8") + "=" + URLEncoder.encode(text, "UTF-8");
                 bufferedWriter.write(post_data);
@@ -432,7 +432,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
                 toast.makeText(context.getApplicationContext(),"Not allowed to login",Toast.LENGTH_SHORT).show();
             }
         }else if (result.contains("Insert")){
-            Log.e("Backgroundworker PE","DB insert sucessfull");
+            Log.e("Backgroundworker PE",result);
         }
     }
 
