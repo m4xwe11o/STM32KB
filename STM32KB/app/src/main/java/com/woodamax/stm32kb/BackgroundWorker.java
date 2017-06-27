@@ -431,7 +431,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String>{
             }else{
                 toast.makeText(context.getApplicationContext(),"Not allowed to login",Toast.LENGTH_SHORT).show();
             }
-        }else if (result.contains("Insert")){
+        }
+        if (result.contains("Insert")){
             Log.e("Backgroundworker PE",result);
         }
     }
