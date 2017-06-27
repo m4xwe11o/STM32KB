@@ -3,6 +3,7 @@ package com.woodamax.stm32kb;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -79,11 +80,22 @@ public class ArticleScreen extends AppCompatActivity {
                     EditText description = (EditText) parent.findViewById(R.id.article_readers_create_description);
                     EditText articletext = (EditText) parent.findViewById(R.id.article_readers_create_text);
                     if(writeArtilceToDb(title, description, articletext)){
-                        String type = "NewArticle";
-                        BackgroundWorker backgroundWorker = new BackgroundWorker(parent.getContext());
-                        backgroundWorker.onPreExecute();
-                        backgroundWorker.doInBackground(type, title.getText().toString(), description.getText().toString(), articletext.getText().toString());
-                        Log.d("EA","Aricle written to DB");
+
+                        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+                        if (SDK_INT > 8)
+                        {
+                            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                                    .permitAll().build();
+                            StrictMode.setThreadPolicy(policy);
+                            //your codes here
+                            String type = "NewArticle";
+                            BackgroundWorker backgroundWorker = new BackgroundWorker(parent.getContext());
+                            backgroundWorker.onPreExecute();
+                            backgroundWorker.doInBackground(type, title.getText().toString(), description.getText().toString(), articletext.getText().toString());
+                            Log.d("EA","Aricle written to DB");
+
+                        }
+
                     }else{
                         Log.e("EA","ERROR writing article to DB");
                     }
